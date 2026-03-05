@@ -57,7 +57,7 @@ jobs:
             target: x86_64-pc-windows-msvc
             label: Windows
             ext: '.exe,.msi'
-          - platform: macos-13
+          - platform: macos-latest
             target: x86_64-apple-darwin
             label: macOS-Intel
             ext: '.dmg'
