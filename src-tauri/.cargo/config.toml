@@ -1,0 +1,16 @@
+# Rust dependency source configuration.
+#
+# Default behavior remains online (crates.io).
+#
+# Optional restricted-network mode is available in two ways:
+# 1) per command:
+#      cargo <cmd> --offline --config 'source.crates-io.replace-with="vendored-sources"'
+# 2) local override file (recommended for CI/offline jobs):
+#      cp .cargo/config.local.toml.example .cargo/config.local.toml
+#      # config.local.toml is intentionally gitignored
+#
+# To (re)populate vendor/ for CI artifacts or an internal mirror handoff:
+#   cargo vendor --manifest-path src-tauri/Cargo.toml src-tauri/vendor
+
+[source.vendored-sources]
+directory = "vendor"

@@ -1,0 +1,12 @@
+# Local optional override for restricted-network/offline Rust builds.
+#
+# Usage:
+#   cp src-tauri/.cargo/config.local.toml.example src-tauri/.cargo/config.local.toml
+#   (keep config.local.toml untracked)
+#
+# Then run from src-tauri/:
+#   cargo generate-lockfile --offline
+#   cargo tauri build --offline --config tauri.conf.json
+
+[source.crates-io]
+replace-with = "vendored-sources"

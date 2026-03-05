@@ -1,0 +1,89 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "World Monitor",
+  "mainBinaryName": "world-monitor",
+  "version": "2.5.6",
+  "identifier": "app.worldmonitor.desktop",
+  "build": {
+    "beforeDevCommand": "npm run build:sidecar-sebuf && npm run dev",
+    "beforeBuildCommand": "npm run build:desktop",
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:5173"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "World Monitor",
+        "label": "main",
+        "width": 1440,
+        "height": 900,
+        "minWidth": 1200,
+        "minHeight": 720,
+        "resizable": true,
+        "fullscreen": false,
+        "backgroundColor": [
+          26,
+          28,
+          30,
+          255
+        ]
+      },
+      {
+        "title": "World Monitor Agent",
+        "label": "agent",
+        "url": "agent.html",
+        "width": 1200,
+        "height": 800,
+        "minWidth": 900,
+        "minHeight": 600,
+        "resizable": true,
+        "fullscreen": false,
+        "visible": false,
+        "backgroundColor": [
+          26,
+          26,
+          26,
+          255
+        ]
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; connect-src 'self' https: http://localhost:5173 http://127.0.0.1:46123 ws: wss: blob: data:; img-src 'self' data: blob: https:; style-src 'self' 'unsafe-inline'; script-src 'self' 'wasm-unsafe-eval' https://www.youtube.com https://us-assets.i.posthog.com; worker-src 'self' blob:; font-src 'self' data: https:; media-src 'self' data: blob: https:; frame-src 'self' http://127.0.0.1:46123 https://worldmonitor.app https://tech.worldmonitor.app https://www.youtube.com https://www.youtube-nocookie.com;"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": [
+      "app",
+      "dmg",
+      "nsis",
+      "msi",
+      "appimage"
+    ],
+    "category": "Productivity",
+    "shortDescription": "World Monitor desktop app (supports World and Tech variants)",
+    "longDescription": "World Monitor desktop app for real-time global intelligence. Build with VITE_VARIANT=tech to package Tech Monitor branding and dataset defaults.",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "resources": [
+      "../api",
+      "sidecar/local-api-server.mjs",
+      "sidecar/package.json",
+      "sidecar/node",
+      "../data",
+      "../src/config"
+    ],
+    "windows": {
+      "digestAlgorithm": "sha256",
+      "timestampUrl": "https://timestamp.digicert.com"
+    },
+    "macOS": {
+      "hardenedRuntime": true
+    }
+  }
+}
