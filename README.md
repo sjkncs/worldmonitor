@@ -42,7 +42,7 @@
 
 ---
 
-## 🆕 What's New in v2.6.0
+## 🆕 What's New in v2.5.6.
 
 > **Released 2026-03-05** — [Full Changelog](./docs/CHANGELOG.md)
 
