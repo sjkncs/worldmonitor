@@ -83,9 +83,20 @@ const ICON = {
   x: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
   arrowLeft: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>',
   link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>',
+  upload: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>',
+  play: '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor"/></svg>',
+  listView: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>',
+  filter: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>',
+  camera: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>',
+  layers: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>',
   refresh: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>',
   chevronDown: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6 9 12 15 18 9"/></svg>',
   chevronUp: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="18 15 12 9 6 15"/></svg>',
+  star: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+  starFilled: '<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+  download: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>',
+  moon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>',
+  sun: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>',
 };
 
 // ── Markdown rendering (lightweight) ──
@@ -146,6 +157,14 @@ const DISCOVER_AGENTS: DiscoverModule[] = [
   { id: 'market-scan', icon: 'chart', labelKey: 'marketAnalysis', desc: 'Finance', color: '#10b981', category: 'finance' },
 ];
 
+const EXTRA_MODULES: DiscoverModule[] = [
+  { id: 'translate',      icon: 'translate', labelKey: 'moreTranslation', desc: '', color: '#0ea5e9', category: 'practical' },
+  { id: 'ai-writing',     icon: 'pen',       labelKey: 'moreAiWriting',   desc: '', color: '#8b5cf6', category: 'work' },
+  { id: 'command-center', icon: 'terminal',  labelKey: 'commandCenter',   desc: '', color: '#6366f1', category: 'work' },
+  { id: 'threat-assess',  icon: 'shield',    labelKey: 'moreThreatAssess',desc: '', color: '#ef4444', category: 'geopolitics' },
+  { id: 'market-scan',    icon: 'chart',     labelKey: 'moreMarketScan',  desc: '', color: '#10b981', category: 'finance' },
+];
+
 const DISCOVER_CATEGORIES = [
   'allCategories', 'catGeopolitics', 'catFinance', 'catOSINT',
   'catPractical', 'catLearning', 'catWork', 'catEntertainment', 'catDraw',
@@ -153,7 +172,7 @@ const DISCOVER_CATEGORIES = [
 
 // ── Main App Class ──
 
-type PageRoute = 'welcome' | 'chat' | 'discover' | 'module' | 'space';
+type PageRoute = 'welcome' | 'chat' | 'discover' | 'module' | 'space' | 'image' | 'code';
 
 export class AgentApp {
   private root: HTMLElement;
@@ -172,6 +191,9 @@ export class AgentApp {
   private isRecording = false;
   private recognition: InstanceType<typeof SpeechRecognition> | null = null;
   private attachedFiles: Array<{ name: string; content: string }> = [];
+  private isDarkMode = true;
+  private pageHistory: PageRoute[] = [];
+  private downloadDropdownOpen = false;
 
   // DOM refs
   private convListEl!: HTMLElement;
@@ -191,7 +213,12 @@ export class AgentApp {
   private modulePageEl!: HTMLElement;
   private referencesPanelEl!: HTMLElement;
   private spaceEl!: HTMLElement;
+  private imageEl!: HTMLElement;
+  private codeEl!: HTMLElement;
   private fileInputEl!: HTMLInputElement;
+  private imageCategory = 'featured';
+  private codeCategory = 'all';
+  private spaceSection = 'records';
 
   constructor(root: HTMLElement) {
     this.root = root;
@@ -290,6 +317,31 @@ export class AgentApp {
           <div class="agent-topbar-center" id="topbar-center"></div>
           <div class="agent-topbar-right">
             <button class="agent-icon-btn" id="topbar-ref-btn" title="${s.references || 'References'}">${ICON.link}</button>
+            <div class="agent-topbar-download-wrap">
+              <button class="agent-icon-btn agent-hidden" id="topbar-download-btn" title="${s.downloadConv || 'Download Conversation'}">${ICON.download}</button>
+              <div class="agent-download-dropdown agent-hidden" id="download-dropdown">
+                <div class="agent-download-item" data-fmt="md">${ICON.file} Markdown (.md)</div>
+                <div class="agent-download-item" data-fmt="txt">${ICON.file} Plain Text (.txt)</div>
+                <div class="agent-download-item" data-fmt="json">${ICON.file} JSON (.json)</div>
+                <div class="agent-download-item" data-fmt="html">${ICON.file} HTML (.html)</div>
+                <div class="agent-download-divider"></div>
+                <div class="agent-download-item" data-fmt="space">${ICON.star} ${s.saveToSpace || 'Save to My Space'}</div>
+              </div>
+            </div>
+            <button class="agent-icon-btn" id="topbar-theme-btn" title="${this.isDarkMode ? (s.lightMode || 'Light Mode') : (s.darkMode || 'Dark Mode')}">${this.isDarkMode ? ICON.sun : ICON.moon}</button>
+            <div class="agent-lang-wrap">
+              <button class="agent-icon-btn agent-lang-btn" id="topbar-lang-btn" title="${s.language}">${ICON.translate}</button>
+              <div class="agent-lang-dropdown agent-hidden" id="lang-dropdown">
+                <div class="agent-lang-item ${this.settings.language === 'zh' || this.settings.language === 'zh-CN' ? 'active' : ''}" data-lang="zh">中文</div>
+                <div class="agent-lang-item ${this.settings.language === 'en' ? 'active' : ''}" data-lang="en">English</div>
+                <div class="agent-lang-item ${this.settings.language === 'auto' ? 'active' : ''}" data-lang="auto">Auto</div>
+                <div class="agent-lang-item ${this.settings.language === 'ja' ? 'active' : ''}" data-lang="ja">日本語</div>
+                <div class="agent-lang-item ${this.settings.language === 'ko' ? 'active' : ''}" data-lang="ko">한국어</div>
+                <div class="agent-lang-item ${this.settings.language === 'ar' ? 'active' : ''}" data-lang="ar">العربية</div>
+                <div class="agent-lang-item ${this.settings.language === 'ru' ? 'active' : ''}" data-lang="ru">Русский</div>
+                <div class="agent-lang-item ${this.settings.language === 'fr' ? 'active' : ''}" data-lang="fr">Français</div>
+              </div>
+            </div>
             <button class="agent-icon-btn" id="topbar-settings" title="${s.settings}">${ICON.settings}</button>
             <button class="agent-dashboard-btn" id="topbar-dashboard">${ICON.globe} ${s.dashboard}</button>
           </div>
@@ -338,6 +390,12 @@ export class AgentApp {
 
         <!-- ═══ My Space page ═══ -->
         <div class="agent-space agent-hidden" id="space-screen"></div>
+
+        <!-- ═══ Image generation page ═══ -->
+        <div class="agent-image-page agent-hidden" id="image-screen"></div>
+
+        <!-- ═══ Code page ═══ -->
+        <div class="agent-code-page agent-hidden" id="code-screen"></div>
 
         <!-- ═══ Module sub-page ═══ -->
         <div class="agent-module-page agent-hidden" id="module-page"></div>
@@ -491,6 +549,8 @@ export class AgentApp {
     this.modulePageEl = document.getElementById('module-page')!;
     this.referencesPanelEl = document.getElementById('references-panel')!;
     this.spaceEl = document.getElementById('space-screen')!;
+    this.imageEl = document.getElementById('image-screen')!;
+    this.codeEl = document.getElementById('code-screen')!;
 
     // Hidden file input for document attach
     this.fileInputEl = document.createElement('input');
@@ -544,6 +604,9 @@ export class AgentApp {
           this.toggleMoreDropdown(btn as HTMLElement);
           return;
         }
+        // Image / Code tool modes navigate to dedicated pages
+        if (tool === 'image') { this.navigateTo('image'); return; }
+        if (tool === 'code')  { this.navigateTo('code');  return; }
         if (this.activeToolMode === tool) {
           this.activeToolMode = null;
           this.root.querySelectorAll('[data-tool]').forEach(b => b.classList.remove('active'));
@@ -555,13 +618,20 @@ export class AgentApp {
       });
     });
 
-    // More dropdown items
+    // More dropdown items → navigate to module pages or set text-mode
     this.moreDropdownEl.querySelectorAll('.agent-more-item').forEach(item => {
       item.addEventListener('click', () => {
         const tool = (item as HTMLElement).dataset.tool!;
+        this.closeMoreDropdown();
+        if (tool === 'ppt') { this.activeModuleId = 'ppt'; this.navigateTo('module'); return; }
+        if (tool === 'command-center') { this.activeModuleId = 'command-center'; this.navigateTo('module'); return; }
+        if (tool === 'translate') { this.activeModuleId = 'translate'; this.navigateTo('module'); return; }
+        if (tool === 'ai-writing') { this.activeModuleId = 'ai-writing'; this.navigateTo('module'); return; }
+        if (tool === 'threat-assess') { this.activeModuleId = 'threat-assess'; this.navigateTo('module'); return; }
+        if (tool === 'market-scan') { this.activeModuleId = 'market-scan'; this.navigateTo('module'); return; }
+        // fallback: set mode + focus
         this.activeToolMode = tool;
         this.root.querySelectorAll('[data-tool]').forEach(b => b.classList.remove('active'));
-        this.closeMoreDropdown();
         this.focusActiveInput();
       });
     });
@@ -674,9 +744,76 @@ export class AgentApp {
       document.getElementById('agent-topbar')!.classList.toggle('collapsed', this.topbarCollapsed);
     });
 
-    // Back button (from module page)
-    document.getElementById('topbar-back-btn')?.addEventListener('click', () => {
-      this.navigateTo('discover');
+    // Back button — uses page history
+    document.getElementById('topbar-back-btn')?.addEventListener('click', () => this.navigateBack());
+
+    // Escape key → navigate back from sub-pages
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !['welcome', 'chat'].includes(this.currentPage)) {
+        this.navigateBack();
+      }
+    });
+
+    // Theme toggle
+    document.getElementById('topbar-theme-btn')?.addEventListener('click', () => this.toggleTheme());
+
+    // Language quick-switch dropdown
+    document.getElementById('topbar-lang-btn')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const dd = document.getElementById('lang-dropdown')!;
+      dd.classList.toggle('agent-hidden');
+    });
+    document.getElementById('lang-dropdown')?.querySelectorAll('.agent-lang-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const lang = (item as HTMLElement).dataset.lang!;
+        this.settings.language = lang;
+        saveSettings(this.settings);
+        const lc = lang === 'auto' ? detectLanguage() : lang as LangCode;
+        setLanguage(lc);
+        document.getElementById('lang-dropdown')!.classList.add('agent-hidden');
+        // Immediate full re-render
+        this.render();
+        this.bindEvents();
+        this.setupCodeCopyButtons();
+        // Restore current page
+        const page = this.currentPage;
+        if (page === 'chat' && this.activeConvId) {
+          const conv = this.getActiveConversation();
+          if (conv) { this.navigateTo('chat', false); this.renderMessages(conv.messages); }
+        } else {
+          this.navigateTo(page, false);
+        }
+      });
+    });
+
+    // Download conversation button
+    document.getElementById('topbar-download-btn')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.downloadDropdownOpen = !this.downloadDropdownOpen;
+      document.getElementById('download-dropdown')!.classList.toggle('agent-hidden', !this.downloadDropdownOpen);
+    });
+    document.getElementById('download-dropdown')?.querySelectorAll('.agent-download-item').forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const fmt = (item as HTMLElement).dataset.fmt!;
+        this.downloadDropdownOpen = false;
+        document.getElementById('download-dropdown')!.classList.add('agent-hidden');
+        if (fmt === 'space') this.saveConvToSpace();
+        else this.downloadConversation(fmt);
+      });
+    });
+
+    // Close dropdowns on outside click
+    document.addEventListener('click', (e) => {
+      const target = e.target as Node;
+      if (!document.getElementById('lang-dropdown')?.parentElement?.contains(target)) {
+        document.getElementById('lang-dropdown')?.classList.add('agent-hidden');
+      }
+      if (this.downloadDropdownOpen && !document.getElementById('download-dropdown')?.parentElement?.contains(target)) {
+        this.downloadDropdownOpen = false;
+        document.getElementById('download-dropdown')?.classList.add('agent-hidden');
+      }
     });
 
     // Reference panel toggle
@@ -690,7 +827,12 @@ export class AgentApp {
 
   // ── Page Routing ──
 
-  private navigateTo(page: PageRoute): void {
+  private navigateTo(page: PageRoute, pushHistory = true): void {
+    // Track navigation history for back button (avoid duplicating same page)
+    if (pushHistory && this.currentPage !== page && this.currentPage !== 'welcome' || this.currentPage === 'chat') {
+      this.pageHistory.push(this.currentPage);
+      if (this.pageHistory.length > 20) this.pageHistory.shift();
+    }
     this.currentPage = page;
     this.welcomeEl.classList.toggle('agent-hidden', page !== 'welcome');
     this.chatAreaEl.classList.toggle('agent-hidden', page !== 'chat');
@@ -698,19 +840,53 @@ export class AgentApp {
     this.discoverEl.classList.toggle('agent-hidden', page !== 'discover');
     this.modulePageEl.classList.toggle('agent-hidden', page !== 'module');
     this.spaceEl.classList.toggle('agent-hidden', page !== 'space');
-    // Show back button on module page, hide otherwise
+    this.imageEl.classList.toggle('agent-hidden', page !== 'image');
+    this.codeEl.classList.toggle('agent-hidden', page !== 'code');
+    // Show back button on ALL sub-pages (not welcome)
     const backBtn = document.getElementById('topbar-back-btn');
-    if (backBtn) backBtn.classList.toggle('agent-hidden', page !== 'module');
+    const isSubPage = !['welcome', 'chat'].includes(page);
+    if (backBtn) backBtn.classList.toggle('agent-hidden', !isSubPage);
+    // Show download button only in chat
+    document.getElementById('topbar-download-btn')?.classList.toggle('agent-hidden', page !== 'chat');
     if (page === 'discover') this.renderDiscoverPage();
     if (page === 'module') this.renderModulePage();
     if (page === 'space') this.renderMySpace();
+    if (page === 'image') this.renderImagePage();
+    if (page === 'code') this.renderCodePage();
     if (page === 'welcome') { this.messagesEl.innerHTML = ''; }
-    // Close references panel when leaving chat
     if (page !== 'chat') this.toggleReferencesPanel(false);
     // Highlight active nav button
     this.root.querySelectorAll('.agent-sidebar-footer-btn').forEach(b => b.classList.remove('active'));
     if (page === 'discover') document.getElementById('discover-link')?.classList.add('active');
     if (page === 'space') document.getElementById('my-space-btn')?.classList.add('active');
+    // Sync tool mode active highlights
+    this.root.querySelectorAll('[data-tool]').forEach(b => {
+      const tool = (b as HTMLElement).dataset.tool;
+      b.classList.toggle('active', tool === 'image' && page === 'image' || tool === 'code' && page === 'code');
+    });
+    // Update topbar center breadcrumb
+    const center = document.getElementById('topbar-center');
+    if (center) {
+      const pageLabels: Partial<Record<PageRoute, string>> = {
+        discover: t().discover,
+        space: t().mySpace,
+        image: t().image,
+        code: t().code,
+        module: this.activeModuleId || 'Module',
+      };
+      center.textContent = isSubPage ? (pageLabels[page] || '') : '';
+    }
+  }
+
+  private navigateBack(): void {
+    if (this.pageHistory.length > 0) {
+      const prev = this.pageHistory.pop()!;
+      this.navigateTo(prev, false);
+    } else {
+      // default fallback
+      if (this.currentPage === 'module') this.navigateTo('discover', false);
+      else this.navigateTo('welcome', false);
+    }
   }
 
   // ── Discover Page ──
@@ -799,49 +975,695 @@ export class AgentApp {
 
   private renderModulePage(): void {
     const s = t();
-    const allModules = [...DISCOVER_FEATURED, ...DISCOVER_SIDE, ...DISCOVER_AGENTS];
+    const allModules = [...DISCOVER_FEATURED, ...DISCOVER_SIDE, ...DISCOVER_AGENTS, ...EXTRA_MODULES];
     const mod = allModules.find(m => m.id === this.activeModuleId);
     if (!mod) { this.navigateTo('discover'); return; }
 
     const label = s[mod.labelKey] || mod.id;
     const icon = ICON[mod.icon as keyof typeof ICON] || '';
 
-    this.modulePageEl.innerHTML = `
-      <div class="agent-module-inner">
-        <div class="agent-module-hero">
-          <div class="agent-module-icon" style="background:${mod.color}20;color:${mod.color}">${icon}</div>
-          <h2 class="agent-module-title">${label}</h2>
-          <p class="agent-module-desc">${s.moduleDesc}</p>
-        </div>
-        <div class="agent-module-actions">
-          <button class="agent-btn-primary agent-module-try" id="module-try-btn">${ICON.send} ${s.tryIt}</button>
-          <button class="agent-btn-secondary agent-module-back" id="module-back-btn">${ICON.arrowLeft} ${s.back}</button>
-        </div>
-        <div class="agent-module-input-wrap">
-          <textarea class="agent-textarea agent-module-textarea" id="module-input" rows="3" placeholder="${s.inputPlaceholder}"></textarea>
-        </div>
-      </div>
-    `;
+    const backBtn = () => `<button class="agent-module-back-top" id="module-back-btn">${ICON.arrowLeft} ${s.back}</button>`;
 
-    // Bind module page events
-    document.getElementById('module-try-btn')?.addEventListener('click', () => {
-      const input = document.getElementById('module-input') as HTMLTextAreaElement;
-      const text = input?.value.trim();
-      this.activeToolMode = this.activeModuleId;
-      if (text) {
-        this.welcomeTextareaEl.value = text;
-      }
-      this.navigateTo('welcome');
-      if (text) {
-        this.handleWelcomeSend();
-      } else {
-        this.welcomeTextareaEl.focus();
-      }
-    });
+    // ── Route to rich per-module UI ──
+    switch (this.activeModuleId) {
 
-    document.getElementById('module-back-btn')?.addEventListener('click', () => {
-      this.navigateTo('discover');
-    });
+      case 'ppt': {
+        const PPT_THEMES = ['Professional Dark', 'Corporate Blue', 'Minimal White', 'Creative Gradient'];
+        const PPT_TEMPLATES = [
+          { id: 'geopolitics', title: 'Geopolitics Briefing', icon: ICON.globe, color: '#2980b9' },
+          { id: 'market',      title: 'Market Analysis',      icon: ICON.chart, color: '#10b981' },
+          { id: 'osint',       title: 'OSINT Intelligence',   icon: ICON.shield, color: '#ef4444' },
+          { id: 'risk',        title: 'Risk Assessment',      icon: ICON.layers, color: '#f59e0b' },
+          { id: 'custom',      title: 'Custom Topic',         icon: ICON.pen, color: '#8b5cf6' },
+        ];
+        this.modulePageEl.innerHTML = `
+          <div class="agent-module-rich">
+            ${backBtn()}
+            <div class="agent-module-rich-header" style="color:#8b5cf6">
+              ${ICON.presentation}<h2>${label}</h2>
+            </div>
+            <div class="agent-ppt-steps">
+              <div class="agent-ppt-step active" data-step="1">
+                <div class="agent-ppt-step-num">1</div>
+                <span>${s.pptChooseTemplate || 'Choose Template'}</span>
+              </div>
+              <div class="agent-ppt-step-arrow">→</div>
+              <div class="agent-ppt-step" data-step="2">
+                <div class="agent-ppt-step-num">2</div>
+                <span>${s.pptOutline || 'Generate Outline'}</span>
+              </div>
+              <div class="agent-ppt-step-arrow">→</div>
+              <div class="agent-ppt-step" data-step="3">
+                <div class="agent-ppt-step-num">3</div>
+                <span>${s.pptExportBtn || 'Export PPT'}</span>
+              </div>
+            </div>
+            <div class="agent-ppt-templates">
+              ${PPT_TEMPLATES.map(t => `
+                <div class="agent-ppt-tmpl" data-tmpl="${t.id}">
+                  <div class="agent-ppt-tmpl-icon" style="color:${t.color}">${t.icon}</div>
+                  <span>${t.title}</span>
+                </div>
+              `).join('')}
+            </div>
+            <div class="agent-ppt-options">
+              <label class="agent-ppt-label">${s.pptTheme || 'Theme'}
+                <select class="agent-ppt-select" id="ppt-theme">
+                  ${PPT_THEMES.map(th => `<option>${th}</option>`).join('')}
+                </select>
+              </label>
+              <label class="agent-ppt-label">${s.pptSlides || 'Slides'}
+                <input type="number" class="agent-ppt-num" id="ppt-slides" value="10" min="5" max="30" />
+              </label>
+            </div>
+            <div class="agent-ppt-topic-wrap">
+              <textarea class="agent-module-textarea" id="ppt-topic" rows="3"
+                placeholder="Enter your PPT topic and key points... e.g. 'Ukraine conflict 2025: military situation, diplomatic efforts, humanitarian impact'"></textarea>
+            </div>
+            <div class="agent-module-footer">
+              <button class="agent-btn-primary" id="ppt-gen-btn">${ICON.presentation} ${s.pptOutline || 'Generate Outline'}</button>
+            </div>
+          </div>`;
+        document.getElementById('module-back-btn')!.addEventListener('click', () => this.navigateTo('discover'));
+        this.modulePageEl.querySelectorAll('.agent-ppt-tmpl').forEach(el => {
+          el.addEventListener('click', () => {
+            this.modulePageEl.querySelectorAll('.agent-ppt-tmpl').forEach(e => e.classList.remove('active'));
+            el.classList.add('active');
+          });
+        });
+        document.getElementById('ppt-gen-btn')!.addEventListener('click', () => {
+          const topic = (document.getElementById('ppt-topic') as HTMLTextAreaElement).value.trim();
+          const theme = (document.getElementById('ppt-theme') as HTMLSelectElement).value;
+          const slides = (document.getElementById('ppt-slides') as HTMLInputElement).value;
+          const tmpl = (this.modulePageEl.querySelector('.agent-ppt-tmpl.active') as HTMLElement)?.dataset.tmpl || 'custom';
+          const prompt = `Create a detailed PPT outline for: "${topic || 'Please provide a topic'}"
+Template: ${tmpl} | Theme: ${theme} | Slides: ${slides}
+Include: slide titles, bullet points, speaker notes, and visual suggestions for each slide.`;
+          this.activeToolMode = 'ppt';
+          this.welcomeTextareaEl.value = prompt;
+          this.welcomeTextareaEl.dispatchEvent(new Event('input'));
+          this.navigateTo('welcome');
+          setTimeout(() => this.handleWelcomeSend(), 100);
+        });
+        break;
+      }
+
+      case 'record': {
+        this.modulePageEl.innerHTML = `
+          <div class="agent-module-rich">
+            ${backBtn()}
+            <div class="agent-module-rich-header" style="color:#14b8a6">
+              ${ICON.mic}<h2>${label}</h2>
+            </div>
+            <div class="agent-record-ui">
+              <div class="agent-record-circle" id="record-circle">
+                <div class="agent-record-mic">${ICON.mic}</div>
+                <div class="agent-record-status" id="record-status">${s.recordStartBtn || 'Start Recording'}</div>
+              </div>
+              <div class="agent-record-timer" id="record-timer">00:00</div>
+              <div class="agent-record-controls">
+                <button class="agent-btn-primary" id="record-toggle-btn">${ICON.mic} ${s.recordStartBtn || 'Start'}</button>
+              </div>
+              <div class="agent-record-transcript-wrap">
+                <div class="agent-record-transcript-label">${s.recordTranscript || 'Transcript'}</div>
+                <textarea class="agent-module-textarea" id="record-transcript" rows="6"
+                  placeholder="${s.recordListening || 'Recording transcript will appear here...'}"></textarea>
+                <div class="agent-module-footer">
+                  <button class="agent-btn-secondary" id="record-clear-btn">${s.delete}</button>
+                  <button class="agent-btn-primary" id="record-send-btn">${ICON.send} ${s.tryIt || 'Analyze'}</button>
+                </div>
+              </div>
+            </div>
+          </div>`;
+        document.getElementById('module-back-btn')!.addEventListener('click', () => this.navigateTo('discover'));
+        let recInterval: ReturnType<typeof setInterval> | null = null;
+        let recSec = 0;
+        const toggleBtn = document.getElementById('record-toggle-btn')!;
+        const circle = document.getElementById('record-circle')!;
+        toggleBtn.addEventListener('click', () => {
+          if (this.isRecording) {
+            this.recognition?.stop();
+          } else {
+            const micBtn = toggleBtn;
+            const ta = document.getElementById('record-transcript') as HTMLTextAreaElement;
+            circle.classList.add('recording');
+            toggleBtn.innerHTML = `${ICON.stop} ${s.recordStopBtn || 'Stop'}`;
+            document.getElementById('record-status')!.textContent = s.recordListening || 'Recording...';
+            if (!recInterval) {
+              recSec = 0;
+              recInterval = setInterval(() => {
+                recSec++;
+                const m = String(Math.floor(recSec / 60)).padStart(2, '0');
+                const sc = String(recSec % 60).padStart(2, '0');
+                document.getElementById('record-timer')!.textContent = `${m}:${sc}`;
+              }, 1000);
+            }
+            this.toggleVoiceInput(micBtn, ta, document.getElementById('record-send-btn') as HTMLButtonElement);
+          }
+        });
+        const origStop = this.stopRecording.bind(this);
+        this.stopRecording = (btn: HTMLElement) => {
+          origStop(btn);
+          circle.classList.remove('recording');
+          toggleBtn.innerHTML = `${ICON.mic} ${s.recordStartBtn || 'Start'}`;
+          document.getElementById('record-status')!.textContent = s.recordStartBtn || 'Start Recording';
+          if (recInterval) { clearInterval(recInterval); recInterval = null; }
+        };
+        document.getElementById('record-clear-btn')!.addEventListener('click', () => {
+          (document.getElementById('record-transcript') as HTMLTextAreaElement).value = '';
+        });
+        document.getElementById('record-send-btn')!.addEventListener('click', () => {
+          const text = (document.getElementById('record-transcript') as HTMLTextAreaElement).value.trim();
+          if (!text) return;
+          this.welcomeTextareaEl.value = `[Voice Recording Transcript]\n${text}\n\nPlease summarize and analyze the key points from this recording.`;
+          this.welcomeTextareaEl.dispatchEvent(new Event('input'));
+          this.navigateTo('welcome');
+          setTimeout(() => this.handleWelcomeSend(), 100);
+        });
+        break;
+      }
+
+      case 'av-speed': {
+        this.modulePageEl.innerHTML = `
+          <div class="agent-module-rich">
+            ${backBtn()}
+            <div class="agent-module-rich-header" style="color:#3b82f6">
+              ${ICON.video}<h2>${label}</h2>
+            </div>
+            <div class="agent-av-dropzone" id="av-dropzone">
+              ${ICON.upload}
+              <div class="agent-av-dropzone-text">${s.avDragDrop || 'Drag & drop audio/video file here'}</div>
+              <div class="agent-av-dropzone-sub">MP3, MP4, WAV, WebM, OGG ≤ 500MB</div>
+              <button class="agent-btn-primary agent-av-upload-btn" id="av-upload-btn">
+                ${ICON.upload} ${s.avUploadBtn || 'Upload File'}
+              </button>
+            </div>
+            <div class="agent-av-url-row">
+              <input class="agent-av-url-input" id="av-url" placeholder="Or paste a YouTube / media URL https://..." />
+              <button class="agent-btn-secondary" id="av-url-btn">${ICON.link} ${s.linkReaderFetch || 'Fetch'}</button>
+            </div>
+            <div class="agent-av-options">
+              <label class="agent-av-opt">
+                <input type="checkbox" checked /> Transcribe audio
+              </label>
+              <label class="agent-av-opt">
+                <input type="checkbox" checked /> Generate summary
+              </label>
+              <label class="agent-av-opt">
+                <input type="checkbox" /> Extract key quotes
+              </label>
+              <label class="agent-av-opt">
+                <input type="checkbox" /> Sentiment analysis
+              </label>
+            </div>
+            <div class="agent-module-footer">
+              <button class="agent-btn-primary" id="av-process-btn">${s.avSummarize || 'Summarize'}</button>
+            </div>
+          </div>`;
+        document.getElementById('module-back-btn')!.addEventListener('click', () => this.navigateTo('discover'));
+        document.getElementById('av-upload-btn')!.addEventListener('click', () => {
+          this.fileInputEl.accept = '.mp3,.mp4,.wav,.webm,.ogg,.m4a';
+          this.fileInputEl.onchange = () => {
+            const f = this.fileInputEl.files?.[0];
+            if (f) {
+              const drop = document.getElementById('av-dropzone')!;
+              drop.innerHTML = `${ICON.video}<div class="agent-av-dropzone-text">${f.name}</div><div class="agent-av-dropzone-sub">${(f.size/1024/1024).toFixed(1)} MB</div>`;
+              drop.classList.add('has-file');
+            }
+            this.fileInputEl.accept = '.txt,.md,.json,.csv,.ts,.js,.py,.html,.css,.xml,.log,.pdf';
+          };
+          this.fileInputEl.click();
+        });
+        document.getElementById('av-process-btn')!.addEventListener('click', () => {
+          const url = (document.getElementById('av-url') as HTMLInputElement).value.trim();
+          const fname = this.modulePageEl.querySelector('.agent-av-dropzone-text')?.textContent || '';
+          const src = url || fname || 'the uploaded media file';
+          this.welcomeTextareaEl.value = `Please transcribe and summarize the audio/video content from: ${src}\n\nProvide: key topics, main points, important quotes, and a structured summary.`;
+          this.welcomeTextareaEl.dispatchEvent(new Event('input'));
+          this.navigateTo('welcome');
+          setTimeout(() => this.handleWelcomeSend(), 100);
+        });
+        break;
+      }
+
+      case 'reading': {
+        this.modulePageEl.innerHTML = `
+          <div class="agent-module-rich">
+            ${backBtn()}
+            <div class="agent-module-rich-header" style="color:#f59e0b">
+              ${ICON.bookmark}<h2>${label}</h2>
+            </div>
+            <div class="agent-reading-tabs">
+              <button class="agent-reading-tab active" data-tab="url">URL</button>
+              <button class="agent-reading-tab" data-tab="text">Text</button>
+            </div>
+            <div id="reading-tab-url">
+              <input class="agent-reading-url" id="reading-url"
+                placeholder="${s.readingPasteUrl || 'Paste article URL...'}" />
+            </div>
+            <div id="reading-tab-text" class="agent-hidden">
+              <textarea class="agent-module-textarea" id="reading-text" rows="8"
+                placeholder="${s.readingPasteUrl || 'Paste article text content here...'}"></textarea>
+            </div>
+            <div class="agent-reading-options">
+              <label class="agent-av-opt"><input type="checkbox" checked /> Summary</label>
+              <label class="agent-av-opt"><input type="checkbox" checked /> Key Points</label>
+              <label class="agent-av-opt"><input type="checkbox" /> Mind Map</label>
+              <label class="agent-av-opt"><input type="checkbox" /> Questions</label>
+            </div>
+            <div class="agent-module-footer">
+              <button class="agent-btn-primary" id="reading-analyze-btn">
+                ${ICON.search} ${s.readingAnalyze || 'Analyze'}
+              </button>
+            </div>
+          </div>`;
+        document.getElementById('module-back-btn')!.addEventListener('click', () => this.navigateTo('discover'));
+        this.modulePageEl.querySelectorAll('.agent-reading-tab').forEach(tab => {
+          tab.addEventListener('click', () => {
+            this.modulePageEl.querySelectorAll('.agent-reading-tab').forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            const which = (tab as HTMLElement).dataset.tab!;
+            document.getElementById('reading-tab-url')!.classList.toggle('agent-hidden', which !== 'url');
+            document.getElementById('reading-tab-text')!.classList.toggle('agent-hidden', which !== 'text');
+          });
+        });
+        document.getElementById('reading-analyze-btn')!.addEventListener('click', () => {
+          const url = (document.getElementById('reading-url') as HTMLInputElement).value.trim();
+          const text = (document.getElementById('reading-text') as HTMLTextAreaElement).value.trim();
+          const src = url || text || '';
+          if (!src) return;
+          this.welcomeTextareaEl.value = url
+            ? `Please read and analyze the article at: ${url}\n\nProvide: summary, key points, main arguments, and your assessment.`
+            : `Please analyze the following article:\n\n${text.slice(0, 4000)}\n\nProvide: summary, key points, main arguments, and your assessment.`;
+          this.welcomeTextareaEl.dispatchEvent(new Event('input'));
+          this.navigateTo('welcome');
+          setTimeout(() => this.handleWelcomeSend(), 100);
+        });
+        break;
+      }
+
+      case 'link-speed': {
+        this.modulePageEl.innerHTML = `
+          <div class="agent-module-rich">
+            ${backBtn()}
+            <div class="agent-module-rich-header" style="color:#10b981">
+              ${ICON.link}<h2>${label}</h2>
+            </div>
+            <div class="agent-link-reader-wrap">
+              <div class="agent-link-input-row">
+                <input class="agent-link-url" id="link-url"
+                  placeholder="${s.linkReaderPlaceholder || 'Enter URL https://...'}" />
+                <button class="agent-btn-primary" id="link-fetch-btn">
+                  ${ICON.externalLink} ${s.linkReaderFetch || 'Fetch'}
+                </button>
+              </div>
+              <div class="agent-link-recent-label">Recently read</div>
+              <div class="agent-link-recent" id="link-recent">
+                ${['https://reuters.com', 'https://bbc.com/news', 'https://apnews.com'].map(u =>
+                  `<div class="agent-link-recent-item" data-url="${u}">${ICON.link} <span>${u}</span></div>`
+                ).join('')}
+              </div>
+            </div>
+            <div class="agent-link-opts">
+              <label class="agent-av-opt"><input type="checkbox" checked /> Full text extraction</label>
+              <label class="agent-av-opt"><input type="checkbox" checked /> Summary</label>
+              <label class="agent-av-opt"><input type="checkbox" /> Translate</label>
+            </div>
+          </div>`;
+        document.getElementById('module-back-btn')!.addEventListener('click', () => this.navigateTo('discover'));
+        document.getElementById('link-fetch-btn')!.addEventListener('click', () => {
+          const url = (document.getElementById('link-url') as HTMLInputElement).value.trim();
+          if (!url) return;
+          this.welcomeTextareaEl.value = `Please fetch and summarize the content from: ${url}\n\nExtract: main article text, key points, publication date, and provide a comprehensive summary.`;
+          this.welcomeTextareaEl.dispatchEvent(new Event('input'));
+          this.navigateTo('welcome');
+          setTimeout(() => this.handleWelcomeSend(), 100);
+        });
+        this.modulePageEl.querySelectorAll('.agent-link-recent-item').forEach(item => {
+          item.addEventListener('click', () => {
+            (document.getElementById('link-url') as HTMLInputElement).value = (item as HTMLElement).dataset.url!;
+          });
+        });
+        break;
+      }
+
+      case 'ai-notes': {
+        this.modulePageEl.innerHTML = `
+          <div class="agent-module-rich">
+            ${backBtn()}
+            <div class="agent-module-rich-header" style="color:#6366f1">
+              ${ICON.file}<h2>${label}</h2>
+            </div>
+            <div class="agent-notes-toolbar">
+              <button class="agent-notes-fmt-btn" title="Bold"><b>B</b></button>
+              <button class="agent-notes-fmt-btn" title="Italic"><i>I</i></button>
+              <button class="agent-notes-fmt-btn" title="Heading">H</button>
+              <button class="agent-notes-fmt-btn" title="List">${ICON.listView}</button>
+              <button class="agent-notes-fmt-btn" title="Link">${ICON.link}</button>
+              <div style="flex:1"></div>
+              <button class="agent-btn-secondary agent-notes-ai-btn" id="notes-ai-btn">${ICON.brain} AI Enhance</button>
+            </div>
+            <input class="agent-space-title-input" id="notes-title" placeholder="${s.noteTitle || 'Note title...'}" />
+            <textarea class="agent-notes-editor" id="notes-body" rows="14"
+              placeholder="${s.noteContent || 'Write your note here...\n\nTips:\n• Use AI to expand, summarize, or improve your notes\n• Paste URLs for AI to extract content\n• Record voice then transcribe here'}"></textarea>
+            <div class="agent-module-footer">
+              <button class="agent-btn-secondary" id="notes-save-btn">${ICON.bookmark} Save to My Space</button>
+              <button class="agent-btn-primary" id="notes-ai-send-btn">${ICON.brain} ${s.tryIt || 'AI Process'}</button>
+            </div>
+          </div>`;
+        document.getElementById('module-back-btn')!.addEventListener('click', () => this.navigateTo('discover'));
+        document.getElementById('notes-save-btn')!.addEventListener('click', () => {
+          const title = (document.getElementById('notes-title') as HTMLInputElement).value.trim();
+          const content = (document.getElementById('notes-body') as HTMLTextAreaElement).value.trim();
+          if (!content) return;
+          const KEY = 'wm-agent-space-notes';
+          const notes = JSON.parse(localStorage.getItem(KEY) || '[]');
+          notes.unshift({ id: Date.now().toString(), title: title || content.slice(0, 40), content, ts: Date.now(), type: 'ai-note' });
+          localStorage.setItem(KEY, JSON.stringify(notes));
+          this.navigateTo('space');
+        });
+        document.getElementById('notes-ai-send-btn')!.addEventListener('click', () => {
+          const content = (document.getElementById('notes-body') as HTMLTextAreaElement).value.trim();
+          if (!content) return;
+          this.welcomeTextareaEl.value = `Please enhance and expand these notes:\n\n${content.slice(0, 3000)}\n\nAdd: more detail, better structure, key insights, and relevant context.`;
+          this.welcomeTextareaEl.dispatchEvent(new Event('input'));
+          this.navigateTo('welcome');
+          setTimeout(() => this.handleWelcomeSend(), 100);
+        });
+        document.getElementById('notes-ai-btn')!.addEventListener('click', () => {
+          document.getElementById('notes-ai-send-btn')!.click();
+        });
+        break;
+      }
+
+      case 'translate': {
+        const LANGS = ['English', 'Chinese', 'Arabic', 'Russian', 'French', 'German', 'Spanish', 'Japanese', 'Korean', 'Portuguese'];
+        this.modulePageEl.innerHTML = `
+          <div class="agent-module-rich">
+            ${backBtn()}
+            <div class="agent-module-rich-header" style="color:#0ea5e9">
+              ${ICON.translate}<h2>${label}</h2>
+            </div>
+            <div class="agent-translate-ui">
+              <div class="agent-translate-row">
+                <div class="agent-translate-pane">
+                  <select class="agent-translate-lang" id="trans-from">
+                    <option value="">Auto Detect</option>
+                    ${LANGS.map(l => `<option>${l}</option>`).join('')}
+                  </select>
+                  <textarea class="agent-module-textarea" id="trans-source" rows="8"
+                    placeholder="${s.translateFrom || 'Enter text to translate...'}"></textarea>
+                </div>
+                <button class="agent-translate-swap" id="trans-swap">${ICON.refresh}</button>
+                <div class="agent-translate-pane">
+                  <select class="agent-translate-lang" id="trans-to">
+                    ${LANGS.map((l, i) => `<option ${i === 0 ? 'selected' : ''}>${l}</option>`).join('')}
+                  </select>
+                  <div class="agent-translate-result agent-module-textarea" id="trans-result">
+                    <em style="color:var(--agent-text-4)">Translation will appear here...</em>
+                  </div>
+                </div>
+              </div>
+              <div class="agent-module-footer">
+                <button class="agent-btn-primary" id="trans-run-btn">
+                  ${ICON.translate} ${s.translateRun || 'Translate'}
+                </button>
+              </div>
+            </div>
+          </div>`;
+        document.getElementById('module-back-btn')!.addEventListener('click', () => this.navigateTo('discover'));
+        document.getElementById('trans-swap')!.addEventListener('click', () => {
+          const from = document.getElementById('trans-from') as HTMLSelectElement;
+          const to = document.getElementById('trans-to') as HTMLSelectElement;
+          [from.value, to.value] = [to.value, from.value];
+        });
+        document.getElementById('trans-run-btn')!.addEventListener('click', () => {
+          const text = (document.getElementById('trans-source') as HTMLTextAreaElement).value.trim();
+          const from = (document.getElementById('trans-from') as HTMLSelectElement).value || 'Auto';
+          const to = (document.getElementById('trans-to') as HTMLSelectElement).value;
+          if (!text) return;
+          this.welcomeTextareaEl.value = `Translate the following text from ${from} to ${to}. Provide only the translation:\n\n${text}`;
+          this.welcomeTextareaEl.dispatchEvent(new Event('input'));
+          this.navigateTo('welcome');
+          setTimeout(() => this.handleWelcomeSend(), 100);
+        });
+        break;
+      }
+
+      case 'ai-writing': {
+        const STYLES = ['Professional', 'Journalistic', 'Academic', 'Casual', 'Persuasive', 'Intelligence Brief'];
+        this.modulePageEl.innerHTML = `
+          <div class="agent-module-rich">
+            ${backBtn()}
+            <div class="agent-module-rich-header" style="color:#8b5cf6">
+              ${ICON.pen}<h2>${label}</h2>
+            </div>
+            <div class="agent-writing-options">
+              <label class="agent-ppt-label">${s.aiWritingStyle || 'Style'}
+                <select class="agent-ppt-select" id="writing-style">
+                  ${STYLES.map(st => `<option>${st}</option>`).join('')}
+                </select>
+              </label>
+              <label class="agent-ppt-label">Type
+                <select class="agent-ppt-select" id="writing-type">
+                  <option>Intelligence Report</option>
+                  <option>News Article</option>
+                  <option>Analysis</option>
+                  <option>Summary</option>
+                  <option>Email</option>
+                  <option>Social Post</option>
+                </select>
+              </label>
+            </div>
+            <textarea class="agent-module-textarea" id="writing-input" rows="6"
+              placeholder="Describe what you want to write, or paste existing content to improve..."></textarea>
+            <div class="agent-module-footer">
+              <button class="agent-btn-primary" id="writing-gen-btn">
+                ${ICON.pen} ${s.aiWritingGenerate || 'Generate'}
+              </button>
+            </div>
+          </div>`;
+        document.getElementById('module-back-btn')!.addEventListener('click', () => this.navigateTo('discover'));
+        document.getElementById('writing-gen-btn')!.addEventListener('click', () => {
+          const input = (document.getElementById('writing-input') as HTMLTextAreaElement).value.trim();
+          const style = (document.getElementById('writing-style') as HTMLSelectElement).value;
+          const type = (document.getElementById('writing-type') as HTMLSelectElement).value;
+          if (!input) return;
+          this.welcomeTextareaEl.value = `Write a ${style.toLowerCase()} ${type.toLowerCase()} about:\n${input}`;
+          this.welcomeTextareaEl.dispatchEvent(new Event('input'));
+          this.navigateTo('welcome');
+          setTimeout(() => this.handleWelcomeSend(), 100);
+        });
+        break;
+      }
+
+      case 'command-center': {
+        const COMMANDS = [
+          { label: 'Geopolitical Briefing',    cmd: 'Generate a comprehensive geopolitical briefing for today covering major hotspots, diplomatic developments, and emerging threats' },
+          { label: 'Market Intelligence',       cmd: 'Provide a market intelligence report on current global financial conditions, key indices, and risk factors' },
+          { label: 'OSINT Summary',             cmd: 'Conduct an OSINT analysis of recent open-source intelligence on the most critical global security developments' },
+          { label: 'Threat Matrix Update',      cmd: 'Update the global threat matrix: categorize current threats by region, type, and severity level' },
+          { label: 'Diplomatic Relations Scan', cmd: 'Scan current diplomatic relations and identify key alliance shifts, tensions, and emerging partnerships' },
+          { label: 'Economic Sanctions Tracker',cmd: 'Track and summarize current international sanctions regimes and their economic impacts' },
+        ];
+        this.modulePageEl.innerHTML = `
+          <div class="agent-module-rich">
+            ${backBtn()}
+            <div class="agent-module-rich-header" style="color:#6366f1">
+              ${ICON.terminal}<h2>${label}</h2>
+            </div>
+            <div class="agent-cmd-grid">
+              ${COMMANDS.map(c => `
+                <div class="agent-cmd-item" data-cmd="${this.escapeHtml(c.cmd)}">
+                  ${ICON.terminal}<span>${c.label}</span>
+                </div>
+              `).join('')}
+            </div>
+            <div class="agent-cmd-custom-label">${s.commandInput || 'Custom Command'}</div>
+            <div class="agent-cmd-input-row">
+              <textarea class="agent-module-textarea" id="cmd-input" rows="3"
+                placeholder="${s.commandInput || 'Enter custom command or query...'}"></textarea>
+              <button class="agent-btn-primary agent-cmd-run" id="cmd-run-btn">
+                ${ICON.send} ${s.commandRun || 'Run'}
+              </button>
+            </div>
+          </div>`;
+        document.getElementById('module-back-btn')!.addEventListener('click', () => this.navigateTo('discover'));
+        this.modulePageEl.querySelectorAll('.agent-cmd-item').forEach(item => {
+          item.addEventListener('click', () => {
+            const cmd = (item as HTMLElement).dataset.cmd!;
+            (document.getElementById('cmd-input') as HTMLTextAreaElement).value = cmd;
+          });
+        });
+        document.getElementById('cmd-run-btn')!.addEventListener('click', () => {
+          const cmd = (document.getElementById('cmd-input') as HTMLTextAreaElement).value.trim();
+          if (!cmd) return;
+          this.welcomeTextareaEl.value = cmd;
+          this.welcomeTextareaEl.dispatchEvent(new Event('input'));
+          this.navigateTo('welcome');
+          setTimeout(() => this.handleWelcomeSend(), 100);
+        });
+        break;
+      }
+
+      case 'threat-assess': {
+        this.modulePageEl.innerHTML = `
+          <div class="agent-module-rich">
+            ${backBtn()}
+            <div class="agent-module-rich-header" style="color:#ef4444">
+              ${ICON.shield}<h2>${label}</h2>
+            </div>
+            <div class="agent-threat-form">
+              <div class="agent-threat-row">
+                <label class="agent-ppt-label">Region / Country
+                  <input class="agent-reading-url" id="threat-region" placeholder="e.g. Middle East, Russia-Ukraine, Taiwan Strait..." />
+                </label>
+                <label class="agent-ppt-label">Threat Type
+                  <select class="agent-ppt-select" id="threat-type">
+                    <option>Military / Armed Conflict</option>
+                    <option>Cyber / Information</option>
+                    <option>Economic / Financial</option>
+                    <option>Political / Diplomatic</option>
+                    <option>Terrorism</option>
+                    <option>Natural / Environmental</option>
+                  </select>
+                </label>
+              </div>
+              <div class="agent-threat-row">
+                <label class="agent-ppt-label">Time Horizon
+                  <select class="agent-ppt-select" id="threat-horizon">
+                    <option>Immediate (24-72h)</option>
+                    <option>Short-term (1-4 weeks)</option>
+                    <option>Medium-term (1-6 months)</option>
+                    <option>Long-term (6+ months)</option>
+                  </select>
+                </label>
+                <label class="agent-ppt-label">Assessment Depth
+                  <select class="agent-ppt-select" id="threat-depth">
+                    <option>Executive Summary</option>
+                    <option>Tactical Analysis</option>
+                    <option>Strategic Deep-dive</option>
+                  </select>
+                </label>
+              </div>
+              <textarea class="agent-module-textarea" id="threat-context" rows="4"
+                placeholder="Additional context, indicators, or specific concerns..."></textarea>
+            </div>
+            <div class="agent-module-footer">
+              <button class="agent-btn-primary" id="threat-run-btn">
+                ${ICON.shield} Generate Threat Assessment
+              </button>
+            </div>
+          </div>`;
+        document.getElementById('module-back-btn')!.addEventListener('click', () => this.navigateTo('discover'));
+        document.getElementById('threat-run-btn')!.addEventListener('click', () => {
+          const region = (document.getElementById('threat-region') as HTMLInputElement).value.trim() || 'Global';
+          const type = (document.getElementById('threat-type') as HTMLSelectElement).value;
+          const horizon = (document.getElementById('threat-horizon') as HTMLSelectElement).value;
+          const depth = (document.getElementById('threat-depth') as HTMLSelectElement).value;
+          const context = (document.getElementById('threat-context') as HTMLTextAreaElement).value.trim();
+          this.welcomeTextareaEl.value = `Conduct a ${depth} threat assessment:
+Region: ${region} | Threat Type: ${type} | Time Horizon: ${horizon}
+${context ? `Additional context: ${context}` : ''}
+
+Provide: threat indicators, probability assessment, potential scenarios, key actors, recommended monitoring points, and mitigation options.`;
+          this.welcomeTextareaEl.dispatchEvent(new Event('input'));
+          this.navigateTo('welcome');
+          setTimeout(() => this.handleWelcomeSend(), 100);
+        });
+        break;
+      }
+
+      case 'market-scan': {
+        this.modulePageEl.innerHTML = `
+          <div class="agent-module-rich">
+            ${backBtn()}
+            <div class="agent-module-rich-header" style="color:#10b981">
+              ${ICON.chart}<h2>${label}</h2>
+            </div>
+            <div class="agent-market-form">
+              <div class="agent-threat-row">
+                <label class="agent-ppt-label">Region / Market
+                  <select class="agent-ppt-select" id="market-region">
+                    <option>Global</option><option>US</option><option>Europe</option>
+                    <option>Asia Pacific</option><option>Emerging Markets</option>
+                    <option>Middle East & Africa</option>
+                  </select>
+                </label>
+                <label class="agent-ppt-label">Sector
+                  <select class="agent-ppt-select" id="market-sector">
+                    <option>All Sectors</option><option>Energy</option><option>Defense</option>
+                    <option>Technology</option><option>Commodities</option>
+                    <option>Currency / FX</option><option>Bonds / Fixed Income</option>
+                  </select>
+                </label>
+              </div>
+              <div class="agent-market-topics">
+                ${['Equity Indices','Commodities','Currencies','Geopolitical Risk Premium','Sanctions Impact','Supply Chain'].map(t => `
+                  <label class="agent-av-opt"><input type="checkbox" ${t === 'Equity Indices' || t === 'Geopolitical Risk Premium' ? 'checked' : ''} /> ${t}</label>
+                `).join('')}
+              </div>
+              <textarea class="agent-module-textarea" id="market-context" rows="3"
+                placeholder="Specific assets, events, or questions to analyze..."></textarea>
+            </div>
+            <div class="agent-module-footer">
+              <button class="agent-btn-primary" id="market-scan-btn">
+                ${ICON.chart} Run Market Scan
+              </button>
+            </div>
+          </div>`;
+        document.getElementById('module-back-btn')!.addEventListener('click', () => this.navigateTo('discover'));
+        document.getElementById('market-scan-btn')!.addEventListener('click', () => {
+          const region = (document.getElementById('market-region') as HTMLSelectElement).value;
+          const sector = (document.getElementById('market-sector') as HTMLSelectElement).value;
+          const context = (document.getElementById('market-context') as HTMLTextAreaElement).value.trim();
+          const topics = Array.from(this.modulePageEl.querySelectorAll('.agent-market-topics input:checked')).map(el => (el.parentElement?.textContent || '').trim()).join(', ');
+          this.welcomeTextareaEl.value = `Conduct a market intelligence scan:
+Region: ${region} | Sector: ${sector} | Focus: ${topics}
+${context ? `Specific questions: ${context}` : ''}
+
+Provide: current market conditions, key drivers, geopolitical risk factors, notable moves, and forward-looking indicators.`;
+          this.welcomeTextareaEl.dispatchEvent(new Event('input'));
+          this.navigateTo('welcome');
+          setTimeout(() => this.handleWelcomeSend(), 100);
+        });
+        break;
+      }
+
+      default: {
+        // Generic fallback for other modules (format-conv, text-rewrite, headline, text-polish)
+        const promptMap: Record<string, string> = {
+          'format-conv':  'Convert the following content to the requested format. Specify your desired output format:',
+          'text-rewrite': 'Rewrite and improve the following text. Make it more professional and impactful:',
+          'headline':     'Generate 10 compelling, attention-grabbing headlines for the following topic:',
+          'text-polish':  'Polish and enhance the following text. Improve grammar, clarity, style, and impact:',
+        };
+        const placeholder = promptMap[this.activeModuleId || ''] || s.inputPlaceholder;
+        this.modulePageEl.innerHTML = `
+          <div class="agent-module-rich">
+            ${backBtn()}
+            <div class="agent-module-rich-header" style="color:${mod.color}">
+              ${icon}<h2>${label}</h2>
+            </div>
+            <p class="agent-module-rich-desc">${s.moduleDesc}</p>
+            <textarea class="agent-module-textarea" id="module-input" rows="8"
+              placeholder="${placeholder}"></textarea>
+            <div class="agent-module-footer">
+              <button class="agent-btn-primary" id="module-try-btn">${ICON.send} ${s.tryIt}</button>
+            </div>
+          </div>`;
+        document.getElementById('module-back-btn')!.addEventListener('click', () => this.navigateTo('discover'));
+        document.getElementById('module-try-btn')!.addEventListener('click', () => {
+          const text = (document.getElementById('module-input') as HTMLTextAreaElement).value.trim();
+          const prompt = text ? `${placeholder}\n\n${text}` : placeholder;
+          this.activeToolMode = this.activeModuleId;
+          this.welcomeTextareaEl.value = prompt;
+          this.welcomeTextareaEl.dispatchEvent(new Event('input'));
+          this.navigateTo('welcome');
+          setTimeout(() => this.handleWelcomeSend(), 100);
+        });
+      }
+    }
   }
 
   // ── References Panel ──
@@ -1127,6 +1949,7 @@ export class AgentApp {
           <div class="agent-msg-actions">
             <button class="agent-msg-action-btn copy-msg" data-text="${this.escapeAttr(msg.content)}">${ICON.copy}</button>
             <button class="agent-msg-action-btn edit-msg">${ICON.edit}</button>
+            <button class="agent-msg-action-btn star-msg" data-role="user" data-text="${this.escapeAttr(msg.content)}" title="${t().saveToSpace || 'Save to My Space'}">${ICON.star}</button>
           </div>
         </div>
       `;
@@ -1144,6 +1967,7 @@ export class AgentApp {
           <div class="agent-msg-content">${renderMarkdown(msg.content)}</div>
           <div class="agent-msg-actions">
             <button class="agent-msg-action-btn copy-msg" data-text="${this.escapeAttr(msg.content)}">${ICON.copy}</button>
+            <button class="agent-msg-action-btn star-msg" data-role="assistant" data-text="${this.escapeAttr(msg.content)}" title="${t().saveToSpace || 'Save to My Space'}">${ICON.star}</button>
             <button class="agent-msg-action-btn like-msg">${ICON.thumbUp}</button>
             <button class="agent-msg-action-btn dislike-msg">${ICON.thumbDown}</button>
             <button class="agent-msg-action-btn share-msg">${ICON.share}</button>
@@ -1163,6 +1987,18 @@ export class AgentApp {
           btn.innerHTML = `${ICON.check}`;
           setTimeout(() => { btn.innerHTML = `${ICON.copy}`; }, 1500);
         });
+      });
+    });
+
+    // Star / bookmark → save to My Space
+    div.querySelectorAll('.star-msg').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const role = (btn as HTMLElement).dataset.role || 'assistant';
+        const text = (btn as HTMLElement).dataset.text || '';
+        this.saveMessageToSpace(role, text);
+        btn.innerHTML = ICON.starFilled;
+        (btn as HTMLElement).style.color = '#f59e0b';
+        (btn as HTMLElement).title = t().savedToSpace || 'Saved!';
       });
     });
 
@@ -1382,107 +2218,549 @@ export class AgentApp {
     });
   }
 
-  // ── My Space Page ──
+  // ── My Space Page (Qwen-style) ──
 
   private renderMySpace(): void {
     const s = t();
     const SPACE_KEY = 'wm-agent-space-notes';
-    const notes: Array<{ id: string; title: string; content: string; ts: number }> =
-      JSON.parse(localStorage.getItem(SPACE_KEY) || '[]');
-
+    type SpaceNote = { id: string; title: string; content: string; ts: number; type: string };
+    const notes: SpaceNote[] = JSON.parse(localStorage.getItem(SPACE_KEY) || '[]');
     const saveNotes = () => localStorage.setItem(SPACE_KEY, JSON.stringify(notes));
 
-    const renderList = () => notes.map(n => `
-      <div class="agent-space-note" data-id="${n.id}">
-        <div class="agent-space-note-header">
-          <span class="agent-space-note-title">${n.title || s.untitled || 'Untitled'}</span>
-          <span class="agent-space-note-ts">${new Date(n.ts).toLocaleDateString()}</span>
-          <button class="agent-space-note-del" data-del="${n.id}" title="${s.delete}">✕</button>
+    const SUB_NAVS = [
+      { key: 'records',   icon: ICON.file,     label: s.spaceRecords   || 'My Records' },
+      { key: 'agents',    icon: ICON.brain,    label: s.spaceAgents    || 'My Agents' },
+      { key: 'favorites', icon: ICON.heart,    label: s.spaceFavorites || 'My Favorites' },
+      { key: 'shares',    icon: ICON.share,    label: s.spaceShares    || 'My Shares' },
+      { key: 'tasks',     icon: ICON.check,    label: s.spaceTasks     || 'My Tasks' },
+    ];
+
+    const renderCards = (section: string) => {
+      const items = section === 'records' ? notes : [];
+      if (!items.length) {
+        return `<div class="agent-space-empty">${s.spaceEmpty || 'No records yet.'}</div>`;
+      }
+      return items.map(n => `
+        <div class="agent-space-card" data-id="${n.id}">
+          <div class="agent-space-card-thumb">
+            <div class="agent-space-card-thumb-inner">${ICON.file}</div>
+          </div>
+          <div class="agent-space-card-title">${this.escapeHtml(n.title || s.untitled || 'Untitled')}</div>
+          <div class="agent-space-card-meta">
+            ${ICON.listView}
+            <span>${new Date(n.ts).toLocaleDateString()}</span>
+            <button class="agent-space-card-del" data-del="${n.id}" title="${s.delete}">${ICON.trash}</button>
+          </div>
         </div>
-        <div class="agent-space-note-preview">${n.content.slice(0, 120)}${n.content.length > 120 ? '…' : ''}</div>
-      </div>
-    `).join('') || `<div class="agent-space-empty">${s.spaceEmpty || 'No notes yet. Create your first note!'}</div>`;
+      `).join('');
+    };
 
     this.spaceEl.innerHTML = `
-      <div class="agent-space-inner">
-        <div class="agent-space-header">
-          <h2>${ICON.user} ${s.mySpace}</h2>
-          <button class="agent-btn-primary agent-space-add-btn" id="space-add-btn">${ICON.plus} ${s.newNote || 'New Note'}</button>
+      <div class="agent-space-layout">
+        <!-- Left sub-nav -->
+        <div class="agent-space-subnav">
+          <div class="agent-space-subnav-section">${ICON.folder} ${s.recentChats || 'My Items'}</div>
+          ${SUB_NAVS.map(n => `
+            <div class="agent-space-subnav-item ${this.spaceSection === n.key ? 'active' : ''}" data-section="${n.key}">
+              ${n.icon}<span>${n.label}</span>
+            </div>
+          `).join('')}
         </div>
 
-        <div class="agent-space-editor agent-hidden" id="space-editor">
+        <!-- Main content -->
+        <div class="agent-space-main">
+          <!-- Toolbar -->
+          <div class="agent-space-toolbar">
+            <button class="agent-btn-primary agent-space-new-btn" id="space-new-btn">
+              ${ICON.plus} ${s.spaceNew || 'New'}
+            </button>
+            <div class="agent-space-search-wrap">
+              ${ICON.search}
+              <input class="agent-space-search" id="space-search" placeholder="${s.search}..." />
+            </div>
+            <div class="agent-space-toolbar-right">
+              <button class="agent-space-tool-btn" title="${s.spaceViewGrid || 'View'}">${ICON.grid}</button>
+              <button class="agent-space-tool-btn" title="${s.spaceAdvFilter || 'Filter'}">${ICON.filter}</button>
+              <button class="agent-space-tool-btn" title="${s.spaceBatchManage || 'Batch'}">${ICON.listView}</button>
+            </div>
+          </div>
+
+          <!-- Card grid -->
+          <div class="agent-space-cards" id="space-cards">${renderCards(this.spaceSection)}</div>
+
+          <!-- Pagination -->
+          <div class="agent-space-pagination">
+            <span class="agent-space-total">${s.spaceRecords || 'Total'} ${notes.length}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Editor modal -->
+      <div class="agent-space-modal agent-hidden" id="space-modal">
+        <div class="agent-space-modal-box">
+          <div class="agent-space-modal-header">
+            <span>${s.newNote || 'New Note'}</span>
+            <button id="space-modal-close">${ICON.x}</button>
+          </div>
           <input class="agent-space-title-input" id="space-note-title" placeholder="${s.noteTitle || 'Note title...'}" />
-          <textarea class="agent-space-textarea" id="space-note-content" rows="8" placeholder="${s.noteContent || 'Write your note here...\n\nTip: Paste important context, URLs, summaries or prompts to use in chats.'}"></textarea>
+          <textarea class="agent-space-textarea" id="space-note-content" rows="8"
+            placeholder="${s.noteContent || 'Write your note here...'}"></textarea>
           <div class="agent-space-editor-actions">
             <button class="agent-btn-secondary" id="space-editor-cancel">${s.cancel}</button>
             <button class="agent-btn-primary" id="space-editor-save">${s.save}</button>
           </div>
         </div>
-
-        <div class="agent-space-list" id="space-note-list">${renderList()}</div>
       </div>
     `;
 
-    // New note button
-    const editor = document.getElementById('space-editor')!;
-    document.getElementById('space-add-btn')!.addEventListener('click', () => {
+    const modal = document.getElementById('space-modal')!;
+    const showModal = () => {
       (document.getElementById('space-note-title') as HTMLInputElement).value = '';
       (document.getElementById('space-note-content') as HTMLTextAreaElement).value = '';
-      editor.classList.remove('agent-hidden');
+      modal.classList.remove('agent-hidden');
       (document.getElementById('space-note-title') as HTMLInputElement).focus();
-    });
+    };
+    const hideModal = () => modal.classList.add('agent-hidden');
 
-    // Cancel editor
-    document.getElementById('space-editor-cancel')!.addEventListener('click', () => {
-      editor.classList.add('agent-hidden');
-    });
+    document.getElementById('space-new-btn')!.addEventListener('click', showModal);
+    document.getElementById('space-modal-close')!.addEventListener('click', hideModal);
+    document.getElementById('space-editor-cancel')!.addEventListener('click', hideModal);
+    modal.addEventListener('click', e => { if (e.target === modal) hideModal(); });
 
-    // Save note
     document.getElementById('space-editor-save')!.addEventListener('click', () => {
       const title = (document.getElementById('space-note-title') as HTMLInputElement).value.trim();
       const content = (document.getElementById('space-note-content') as HTMLTextAreaElement).value.trim();
       if (!content) return;
-      notes.unshift({ id: Date.now().toString(), title: title || (content.slice(0, 40)), content, ts: Date.now() });
+      notes.unshift({ id: Date.now().toString(), title: title || content.slice(0, 40), content, ts: Date.now(), type: 'note' });
       saveNotes();
-      editor.classList.add('agent-hidden');
-      document.getElementById('space-note-list')!.innerHTML = renderList();
-      this.bindSpaceNoteEvents(notes, saveNotes, renderList);
+      hideModal();
+      document.getElementById('space-cards')!.innerHTML = renderCards(this.spaceSection);
+      document.querySelector('.agent-space-total')!.textContent = `${s.spaceRecords || 'Total'} ${notes.length}`;
+      this.bindSpaceCardEvents(notes, saveNotes, renderCards);
     });
 
-    this.bindSpaceNoteEvents(notes, saveNotes, renderList);
+    // Sub-nav switching
+    this.spaceEl.querySelectorAll('.agent-space-subnav-item').forEach(item => {
+      item.addEventListener('click', () => {
+        this.spaceSection = (item as HTMLElement).dataset.section!;
+        this.spaceEl.querySelectorAll('.agent-space-subnav-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+        document.getElementById('space-cards')!.innerHTML = renderCards(this.spaceSection);
+        this.bindSpaceCardEvents(notes, saveNotes, renderCards);
+      });
+    });
+
+    // Search
+    document.getElementById('space-search')!.addEventListener('input', (e) => {
+      const q = (e.target as HTMLInputElement).value.toLowerCase();
+      const filtered = q ? notes.filter(n => n.title.toLowerCase().includes(q) || n.content.toLowerCase().includes(q)) : notes;
+      document.getElementById('space-cards')!.innerHTML = filtered.length
+        ? filtered.map(n => `
+          <div class="agent-space-card" data-id="${n.id}">
+            <div class="agent-space-card-thumb"><div class="agent-space-card-thumb-inner">${ICON.file}</div></div>
+            <div class="agent-space-card-title">${this.escapeHtml(n.title || s.untitled || 'Untitled')}</div>
+            <div class="agent-space-card-meta">${ICON.listView}<span>${new Date(n.ts).toLocaleDateString()}</span>
+              <button class="agent-space-card-del" data-del="${n.id}">${ICON.trash}</button>
+            </div>
+          </div>`).join('')
+        : `<div class="agent-space-empty">${s.noResults || 'No results'}</div>`;
+      this.bindSpaceCardEvents(notes, saveNotes, renderCards);
+    });
+
+    this.bindSpaceCardEvents(notes, saveNotes, renderCards);
   }
 
-  private bindSpaceNoteEvents(
-    notes: Array<{ id: string; title: string; content: string; ts: number }>,
+  private bindSpaceCardEvents(
+    notes: Array<{ id: string; title: string; content: string; ts: number; type: string }>,
     saveNotes: () => void,
-    renderList: () => string
+    renderCards: (section: string) => string
   ): void {
-    // Delete buttons
-    document.querySelectorAll('[data-del]').forEach(btn => {
+    this.spaceEl.querySelectorAll('.agent-space-card-del').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
         const id = (btn as HTMLElement).dataset.del!;
         const idx = notes.findIndex(n => n.id === id);
         if (idx >= 0) { notes.splice(idx, 1); saveNotes(); }
-        document.getElementById('space-note-list')!.innerHTML = renderList();
-        this.bindSpaceNoteEvents(notes, saveNotes, renderList);
+        document.getElementById('space-cards')!.innerHTML = renderCards(this.spaceSection);
+        this.bindSpaceCardEvents(notes, saveNotes, renderCards);
       });
     });
 
-    // Click note to use in chat
-    document.querySelectorAll('.agent-space-note').forEach(card => {
+    this.spaceEl.querySelectorAll('.agent-space-card').forEach(card => {
       card.addEventListener('click', (e) => {
-        if ((e.target as HTMLElement).dataset.del) return;
+        if ((e.target as HTMLElement).closest('.agent-space-card-del')) return;
         const id = (card as HTMLElement).dataset.id!;
         const note = notes.find(n => n.id === id);
         if (!note) return;
         this.welcomeTextareaEl.value = note.content;
         this.welcomeTextareaEl.dispatchEvent(new Event('input'));
-        this.welcomeSendBtnEl.disabled = !note.content.trim();
+        this.welcomeSendBtnEl.disabled = false;
         this.navigateTo('welcome');
         this.welcomeTextareaEl.focus();
       });
     });
+  }
+
+  // ── Image Generation Page ──
+
+  private renderImagePage(): void {
+    const s = t();
+    const CATS = [
+      { key: 'featured',   label: s.imageFeatured   || 'Featured' },
+      { key: 'poster',     label: s.imagePoster      || 'Poster' },
+      { key: 'ecommerce',  label: s.imageEcommerce   || 'E-commerce' },
+      { key: 'portrait',   label: s.imagePortrait    || 'Portrait' },
+    ];
+
+    // Sample gallery items (gradient placeholders representing WM-themed generated images)
+    const GALLERY_ITEMS = [
+      { label: 'Global Crisis Map 2025',        gradient: 'linear-gradient(135deg,#1e3a5f,#2d6a8f)',  span: 'tall' },
+      { label: 'Geopolitical Tension Chart',     gradient: 'linear-gradient(135deg,#7c1c1c,#c0392b)',  span: 'normal' },
+      { label: 'Satellite Imagery – Middle East',gradient: 'linear-gradient(135deg,#1a4a2e,#27ae60)',  span: 'normal' },
+      { label: 'Market Volatility Heatmap',      gradient: 'linear-gradient(135deg,#2c1654,#8e44ad)',  span: 'wide' },
+      { label: 'OSINT Network Graph',            gradient: 'linear-gradient(135deg,#1a2a4a,#2980b9)',  span: 'normal' },
+      { label: 'Conflict Zone Timeline',         gradient: 'linear-gradient(135deg,#4a2c1a,#e67e22)',  span: 'normal' },
+      { label: 'Intelligence Report Cover',      gradient: 'linear-gradient(135deg,#0d0d1a,#3d5a80)',  span: 'tall' },
+      { label: 'Risk Assessment Dashboard',      gradient: 'linear-gradient(135deg,#1a3a2a,#16a085)',  span: 'normal' },
+      { label: 'Diplomatic Relations Map',       gradient: 'linear-gradient(135deg,#2a1a3a,#6c3483)',  span: 'normal' },
+    ];
+
+    const galleryHtml = GALLERY_ITEMS.map(item => `
+      <div class="agent-img-card agent-img-card--${item.span}" style="background:${item.gradient}">
+        <div class="agent-img-card-overlay">
+          <span class="agent-img-card-label">${item.label}</span>
+          <button class="agent-img-card-use">${ICON.play} Use</button>
+        </div>
+      </div>
+    `).join('');
+
+    this.imageEl.innerHTML = `
+      <div class="agent-image-inner">
+        <!-- Generator input bar -->
+        <div class="agent-image-gen-bar">
+          <textarea class="agent-image-gen-textarea" id="image-gen-input" rows="2"
+            placeholder="${s.imageGenTitle || 'Describe the image you want to generate...'}"></textarea>
+          <div class="agent-image-gen-actions">
+            <div class="agent-image-tag">${ICON.image} ${s.image}</div>
+            <button class="agent-image-gen-opt-btn" title="${s.imageRefImg || 'Ref Image'}">${ICON.camera} ${s.imageRefImg || 'Ref'}</button>
+            <select class="agent-image-ratio-select" title="${s.imageAspectRatio || 'Ratio'}">
+              <option>1:1</option><option>3:4</option><option>4:3</option>
+              <option>16:9</option><option>9:16</option>
+            </select>
+            <button class="agent-btn-primary agent-image-gen-send" id="image-gen-btn">
+              ${ICON.send}
+            </button>
+          </div>
+        </div>
+
+        <!-- Category tabs -->
+        <div class="agent-image-cats">
+          ${CATS.map(c => `
+            <button class="agent-image-cat ${this.imageCategory === c.key ? 'active' : ''}" data-cat="${c.key}">${c.label}</button>
+          `).join('')}
+        </div>
+
+        <!-- Gallery grid -->
+        <div class="agent-image-gallery" id="image-gallery">${galleryHtml}</div>
+      </div>
+    `;
+
+    // Category tabs
+    this.imageEl.querySelectorAll('.agent-image-cat').forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.imageCategory = (btn as HTMLElement).dataset.cat!;
+        this.imageEl.querySelectorAll('.agent-image-cat').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+
+    // Generate button → hand off to chat with image prompt
+    document.getElementById('image-gen-btn')!.addEventListener('click', () => {
+      const prompt = (document.getElementById('image-gen-input') as HTMLTextAreaElement).value.trim();
+      if (!prompt) return;
+      this.activeToolMode = 'image';
+      this.welcomeTextareaEl.value = `[Image Generation Request]\n${prompt}`;
+      this.welcomeTextareaEl.dispatchEvent(new Event('input'));
+      this.welcomeSendBtnEl.disabled = false;
+      this.navigateTo('welcome');
+      // Auto-send
+      setTimeout(() => this.handleWelcomeSend(), 100);
+    });
+
+    // Gallery card use buttons
+    this.imageEl.querySelectorAll('.agent-img-card-use').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const card = (btn as HTMLElement).closest('.agent-img-card') as HTMLElement;
+        const label = card.querySelector('.agent-img-card-label')?.textContent || '';
+        (document.getElementById('image-gen-input') as HTMLTextAreaElement).value = label;
+      });
+    });
+  }
+
+  // ── Code Page ──
+
+  private renderCodePage(): void {
+    const s = t();
+    const CATS = [
+      { key: 'all',       label: s.codeAll       || 'All' },
+      { key: 'tools',     label: s.codeTools      || 'Tools' },
+      { key: 'webdesign', label: s.codeWebDesign  || 'Web Design' },
+      { key: 'fun',       label: s.codeFun        || 'Interactive' },
+      { key: 'learning',  label: s.codeLearning   || 'Learning' },
+    ];
+
+    // WM-themed project templates
+    const ALL_PROJECTS = [
+      { id: 'globe3d',     cat: 'tools',     title: '3D Geopolitics Globe',   author: 'WM Labs', gradient: 'linear-gradient(135deg,#1a2a4a,#2980b9)', prompt: 'Create an interactive 3D globe showing real-time geopolitical events using Three.js' },
+      { id: 'osint',       cat: 'tools',     title: 'OSINT Dashboard',         author: 'WM Labs', gradient: 'linear-gradient(135deg,#1a3a2a,#27ae60)', prompt: 'Build an OSINT intelligence dashboard with data visualization panels' },
+      { id: 'heatmap',     cat: 'webdesign', title: 'Crisis Heatmap',          author: 'WM Labs', gradient: 'linear-gradient(135deg,#7c1c1c,#c0392b)', prompt: 'Build a CSS/JS crisis heatmap for world regions with color intensity by risk level' },
+      { id: 'timeline',    cat: 'tools',     title: 'Conflict Timeline',       author: 'WM Labs', gradient: 'linear-gradient(135deg,#2c1654,#8e44ad)', prompt: 'Create a D3.js interactive timeline of major world conflict events' },
+      { id: 'market',      cat: 'tools',     title: 'Market Volatility Chart', author: 'WM Labs', gradient: 'linear-gradient(135deg,#1a4a2e,#16a085)', prompt: 'Build a real-time market volatility chart with candlesticks using Chart.js' },
+      { id: 'risk-calc',   cat: 'tools',     title: 'Country Risk Calculator', author: 'WM Labs', gradient: 'linear-gradient(135deg,#4a2c1a,#e67e22)', prompt: 'Create a country risk scoring calculator with weighted factors (political, economic, security)' },
+      { id: 'news-feed',   cat: 'webdesign', title: 'Intelligence News Feed',  author: 'WM Labs', gradient: 'linear-gradient(135deg,#0d1a2a,#3d5a80)', prompt: 'Build a live intelligence news aggregator UI with category filters and source badges' },
+      { id: 'network',     cat: 'fun',       title: 'Diplomatic Network Graph',author: 'WM Labs', gradient: 'linear-gradient(135deg,#1a0d2a,#6c3483)', prompt: 'Create a force-directed graph of diplomatic relations between countries' },
+      { id: 'decoder',     cat: 'fun',       title: 'Signal Decoder Demo',     author: 'WM Labs', gradient: 'linear-gradient(135deg,#0d2a1a,#1abc9c)', prompt: 'Build a fun interactive signal/morse code decoder with animated waveforms' },
+      { id: 'quiz',        cat: 'learning',  title: 'Geopolitics Quiz',        author: 'WM Labs', gradient: 'linear-gradient(135deg,#2a1a0d,#e74c3c)', prompt: 'Create an interactive geopolitics quiz app with scoring and explanations' },
+      { id: 'mapper',      cat: 'learning',  title: 'World Capitals Map',      author: 'WM Labs', gradient: 'linear-gradient(135deg,#0d2a2a,#2c9b8f)', prompt: 'Build an interactive world capitals learning map with click-to-reveal info' },
+      { id: 'portfolio',   cat: 'webdesign', title: 'Analyst Portfolio Site',  author: 'WM Labs', gradient: 'linear-gradient(135deg,#1a1a2a,#7f8c8d)', prompt: 'Create a clean analyst portfolio website with dark theme and data visualization demos' },
+    ];
+
+    const filtered = this.codeCategory === 'all'
+      ? ALL_PROJECTS
+      : ALL_PROJECTS.filter(p => p.cat === this.codeCategory);
+
+    const cardsHtml = filtered.map(p => `
+      <div class="agent-code-card" data-prompt="${this.escapeHtml(p.prompt)}" data-id="${p.id}">
+        <div class="agent-code-card-thumb" style="background:${p.gradient}">
+          <div class="agent-code-card-thumb-icon">${ICON.code}</div>
+        </div>
+        <div class="agent-code-card-info">
+          <div class="agent-code-card-title">${p.title}</div>
+          <div class="agent-code-card-author">${ICON.user} ${p.author}</div>
+        </div>
+      </div>
+    `).join('');
+
+    this.codeEl.innerHTML = `
+      <div class="agent-code-inner">
+        <!-- Header -->
+        <div class="agent-code-header">
+          <div class="agent-code-header-icon">${ICON.code}</div>
+          <h2 class="agent-code-title">${s.codePageTitle || "Let's Code Together"}</h2>
+          <p class="agent-code-subtitle">${s.codePagePlaceholder || 'Ask a coding question...'}</p>
+        </div>
+
+        <!-- Input bar -->
+        <div class="agent-code-input-bar">
+          <textarea class="agent-code-textarea" id="code-page-input" rows="2"
+            placeholder="${s.codePagePlaceholder || 'Describe what you want to build...'}"></textarea>
+          <div class="agent-code-input-actions">
+            <div class="agent-code-tag">${ICON.code} ${s.code}</div>
+            <button class="agent-action-btn" title="${s.documents}" id="code-attach-btn">${ICON.attach}</button>
+            <button class="agent-btn-primary agent-code-send" id="code-send-btn">${ICON.send}</button>
+          </div>
+        </div>
+
+        <!-- Category tabs -->
+        <div class="agent-code-cats">
+          ${CATS.map(c => `
+            <button class="agent-code-cat ${this.codeCategory === c.key ? 'active' : ''}" data-cat="${c.key}">${c.label}</button>
+          `).join('')}
+        </div>
+
+        <!-- Project card grid -->
+        <div class="agent-code-grid" id="code-grid">${cardsHtml}</div>
+      </div>
+    `;
+
+    // Category switching
+    this.codeEl.querySelectorAll('.agent-code-cat').forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.codeCategory = (btn as HTMLElement).dataset.cat!;
+        this.codeEl.querySelectorAll('.agent-code-cat').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const newFiltered = this.codeCategory === 'all' ? ALL_PROJECTS : ALL_PROJECTS.filter(p => p.cat === this.codeCategory);
+        document.getElementById('code-grid')!.innerHTML = newFiltered.map(p => `
+          <div class="agent-code-card" data-prompt="${this.escapeHtml(p.prompt)}" data-id="${p.id}">
+            <div class="agent-code-card-thumb" style="background:${p.gradient}">
+              <div class="agent-code-card-thumb-icon">${ICON.code}</div>
+            </div>
+            <div class="agent-code-card-info">
+              <div class="agent-code-card-title">${p.title}</div>
+              <div class="agent-code-card-author">${ICON.user} ${p.author}</div>
+            </div>
+          </div>
+        `).join('');
+        this.bindCodeCardEvents();
+      });
+    });
+
+    // Send button → chat with code mode
+    document.getElementById('code-send-btn')!.addEventListener('click', () => {
+      const prompt = (document.getElementById('code-page-input') as HTMLTextAreaElement).value.trim();
+      if (!prompt) return;
+      this.activeToolMode = 'code';
+      this.welcomeTextareaEl.value = prompt;
+      this.welcomeTextareaEl.dispatchEvent(new Event('input'));
+      this.welcomeSendBtnEl.disabled = false;
+      this.navigateTo('welcome');
+      setTimeout(() => this.handleWelcomeSend(), 100);
+    });
+
+    // Attach button
+    document.getElementById('code-attach-btn')!.addEventListener('click', () => {
+      this.fileInputEl.value = '';
+      this.fileInputEl.onchange = () => {
+        const ta = document.getElementById('code-page-input') as HTMLTextAreaElement;
+        this.handleFileAttach(ta, document.getElementById('code-send-btn') as HTMLButtonElement);
+      };
+      this.fileInputEl.click();
+    });
+
+    this.bindCodeCardEvents();
+  }
+
+  private bindCodeCardEvents(): void {
+    this.codeEl.querySelectorAll('.agent-code-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const prompt = (card as HTMLElement).dataset.prompt!;
+        this.activeToolMode = 'code';
+        this.welcomeTextareaEl.value = prompt;
+        this.welcomeTextareaEl.dispatchEvent(new Event('input'));
+        this.welcomeSendBtnEl.disabled = false;
+        this.navigateTo('welcome');
+        setTimeout(() => this.handleWelcomeSend(), 100);
+      });
+    });
+  }
+
+  // ── Theme Toggle ──
+
+  private toggleTheme(): void {
+    this.isDarkMode = !this.isDarkMode;
+    if (this.isDarkMode) {
+      this.settings.bgColor = '#0f0f10';
+      this.settings.gradientStart = '#0f0f10';
+      this.settings.gradientEnd = '#1a1a2e';
+    } else {
+      this.settings.bgColor = '#f5f5f7';
+      this.settings.gradientStart = '#f5f5f7';
+      this.settings.gradientEnd = '#e8e8f0';
+    }
+    saveSettings(this.settings);
+    this.applyAppearance();
+    // Update icon
+    const btn = document.getElementById('topbar-theme-btn');
+    if (btn) {
+      btn.innerHTML = this.isDarkMode ? ICON.sun : ICON.moon;
+      btn.title = this.isDarkMode ? (t().lightMode || 'Light Mode') : (t().darkMode || 'Dark Mode');
+    }
+    this.showToast(this.isDarkMode ? (t().darkMode || 'Dark Mode') : (t().lightMode || 'Light Mode'));
+  }
+
+  // ── Download Conversation ──
+
+  private downloadConversation(fmt: string): void {
+    const conv = this.getActiveConversation();
+    if (!conv) return;
+    const title = conv.title || 'conversation';
+    const safeTitle = title.replace(/[^\w\u4e00-\u9fa5\s-]/g, '').trim().slice(0, 40) || 'conversation';
+    const now = new Date().toISOString().slice(0, 10);
+
+    let content = '';
+    let mime = 'text/plain';
+    let ext = fmt;
+
+    if (fmt === 'md') {
+      mime = 'text/markdown';
+      content = `# ${title}\n\n_${now}_\n\n---\n\n`;
+      content += conv.messages.map(m => {
+        const role = m.role === 'user' ? '**You**' : `**${t().agent || 'Agent'}**`;
+        const time = new Date(m.timestamp).toLocaleString();
+        return `${role} · ${time}\n\n${m.content}\n\n---\n`;
+      }).join('\n');
+    } else if (fmt === 'txt') {
+      content = `${title}\n${now}\n${'='.repeat(40)}\n\n`;
+      content += conv.messages.map(m => {
+        const role = m.role === 'user' ? 'You' : (t().agent || 'Agent');
+        const time = new Date(m.timestamp).toLocaleString();
+        return `[${role}] ${time}\n${m.content}\n\n`;
+      }).join('');
+    } else if (fmt === 'json') {
+      mime = 'application/json';
+      content = JSON.stringify({ title, exportedAt: now, messages: conv.messages }, null, 2);
+    } else if (fmt === 'html') {
+      mime = 'text/html';
+      const msgHtml = conv.messages.map(m => {
+        const role = m.role === 'user' ? 'You' : (t().agent || 'Agent');
+        const time = new Date(m.timestamp).toLocaleString();
+        const bg = m.role === 'user' ? '#1e293b' : '#0f172a';
+        const safeContent = m.content.replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+        return `<div style="background:${bg};padding:16px;margin:8px 0;border-radius:8px"><strong style="color:#94a3b8">${role}</strong> <small style="color:#64748b">${time}</small><div style="margin-top:8px;color:#e2e8f0">${safeContent}</div></div>`;
+      }).join('');
+      content = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${title}</title><style>body{font-family:system-ui,sans-serif;background:#020617;color:#e2e8f0;padding:24px;max-width:800px;margin:0 auto}</style></head><body><h1>${title}</h1><p style="color:#64748b">${now}</p>${msgHtml}</body></html>`;
+    }
+
+    const blob = new Blob([content], { type: mime + ';charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${safeTitle}-${now}.${ext}`;
+    a.click();
+    URL.revokeObjectURL(url);
+    this.showToast(`${t().downloadConv || 'Saved'} ${safeTitle}.${ext}`);
+  }
+
+  private saveConvToSpace(): void {
+    const conv = this.getActiveConversation();
+    if (!conv) return;
+    const KEY = 'wm-agent-space-notes';
+    const notes = JSON.parse(localStorage.getItem(KEY) || '[]');
+    const content = conv.messages.map(m => {
+      const role = m.role === 'user' ? (t().you || 'You') : (t().agent || 'Agent');
+      return `**${role}**: ${m.content}`;
+    }).join('\n\n---\n\n');
+    notes.unshift({
+      id: Date.now().toString(),
+      title: conv.title || t().mySpace,
+      content,
+      ts: Date.now(),
+      type: 'conversation',
+    });
+    localStorage.setItem(KEY, JSON.stringify(notes));
+    this.showToast(t().savedToSpace || '已保存到我的空间');
+  }
+
+  private saveMessageToSpace(role: string, content: string): void {
+    const KEY = 'wm-agent-space-notes';
+    const notes = JSON.parse(localStorage.getItem(KEY) || '[]');
+    const label = role === 'user' ? (t().you || 'You') : (t().agent || 'Agent');
+    notes.unshift({
+      id: Date.now().toString(),
+      title: `${t().spaceFavorites || 'Favorite'} · ${label} · ${new Date().toLocaleDateString()}`,
+      content,
+      ts: Date.now(),
+      type: 'favorite',
+    });
+    localStorage.setItem(KEY, JSON.stringify(notes));
+    this.showToast(t().savedToSpace || '已收藏到我的空间');
+  }
+
+  private showToast(message: string): void {
+    const existing = document.getElementById('agent-toast');
+    if (existing) existing.remove();
+    const toast = document.createElement('div');
+    toast.id = 'agent-toast';
+    toast.className = 'agent-toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    // Animate in
+    requestAnimationFrame(() => { toast.classList.add('visible'); });
+    setTimeout(() => {
+      toast.classList.remove('visible');
+      toast.addEventListener('transitionend', () => toast.remove(), { once: true });
+    }, 2500);
   }
 
   // ── More Dropdown ──
