@@ -74,7 +74,7 @@
     "convex": "^1.32.0",
     "d3": "^7.9.0",
     "deck.gl": "^9.2.6",
-    "fast-xml-parser": "^5.3.7",
+    "fast-xml-parser": "^5.4.2",
     "i18next": "^25.8.10",
     "i18next-browser-languagedetector": "^8.2.1",
     "maplibre-gl": "^5.16.0",
@@ -82,5 +82,13 @@
     "posthog-js": "^1.352.0",
     "topojson-client": "^3.1.0",
     "youtubei.js": "^16.0.1"
+  },
+  "overrides": {
+    "fast-xml-parser": "^5.4.2",
+    "serialize-javascript": "^7.0.4",
+    "rollup": "^4.59.0",
+    "minimatch": "^10.0.1",
+    "markdown-it": "^14.1.1",
+    "dompurify": "^3.3.2"
   }
 }
