@@ -2078,3 +2078,222 @@ select.agent-settings-input {
 [dir="rtl"] .agent-conv-item .conv-delete { right: auto; left: 6px; }
 [dir="rtl"] .agent-msg-content blockquote { border-left: none; border-right: 3px solid var(--agent-accent); border-radius: var(--agent-radius-sm) 0 0 var(--agent-radius-sm); }
 [dir="rtl"] .agent-msg-content ul, [dir="rtl"] .agent-msg-content ol { padding-left: 0; padding-right: 22px; }
+
+/* ============================================================
+   MY SPACE PAGE
+   ============================================================ */
+
+.agent-space { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+
+.agent-space-inner {
+  max-width: 760px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px 24px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.agent-space-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.agent-space-header h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--agent-text-1);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.agent-space-add-btn { flex-shrink: 0; }
+
+.agent-space-editor {
+  background: var(--agent-surface-2);
+  border: 1px solid var(--agent-border);
+  border-radius: var(--agent-radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.agent-space-title-input {
+  background: var(--agent-surface-3);
+  border: 1px solid var(--agent-border);
+  border-radius: var(--agent-radius-sm);
+  color: var(--agent-text-1);
+  font-size: 15px;
+  font-weight: 600;
+  padding: 8px 12px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+.agent-space-title-input:focus { border-color: var(--agent-accent); }
+
+.agent-space-textarea {
+  background: var(--agent-surface-3);
+  border: 1px solid var(--agent-border);
+  border-radius: var(--agent-radius-sm);
+  color: var(--agent-text-1);
+  font-size: 14px;
+  line-height: 1.6;
+  padding: 10px 12px;
+  resize: vertical;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+.agent-space-textarea:focus { border-color: var(--agent-accent); }
+
+.agent-space-editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.agent-space-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.agent-space-note {
+  background: var(--agent-surface-2);
+  border: 1px solid var(--agent-border);
+  border-radius: var(--agent-radius);
+  padding: 14px 16px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.agent-space-note:hover {
+  border-color: var(--agent-accent);
+  background: var(--agent-surface-3);
+}
+
+.agent-space-note-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.agent-space-note-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--agent-text-1);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.agent-space-note-ts {
+  font-size: 11px;
+  color: var(--agent-text-4);
+  flex-shrink: 0;
+}
+
+.agent-space-note-del {
+  background: none;
+  border: none;
+  color: var(--agent-text-4);
+  cursor: pointer;
+  font-size: 12px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  line-height: 1;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.15s, color 0.15s;
+}
+.agent-space-note:hover .agent-space-note-del { opacity: 1; }
+.agent-space-note-del:hover { color: #ef4444; }
+
+.agent-space-note-preview {
+  font-size: 13px;
+  color: var(--agent-text-3);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.agent-space-empty {
+  text-align: center;
+  color: var(--agent-text-4);
+  font-size: 14px;
+  padding: 48px 0;
+}
+
+/* ============================================================
+   SIDEBAR SEARCH INPUT
+   ============================================================ */
+
+.agent-sidebar-search-input {
+  display: block;
+  width: calc(100% - 24px);
+  margin: 4px 12px 6px;
+  background: var(--agent-surface-3);
+  border: 1px solid var(--agent-border);
+  border-radius: var(--agent-radius-sm);
+  color: var(--agent-text-1);
+  font-size: 13px;
+  padding: 7px 10px;
+  outline: none;
+  box-sizing: border-box;
+}
+.agent-sidebar-search-input:focus { border-color: var(--agent-accent); }
+
+/* ============================================================
+   SIDEBAR FOOTER ACTIVE STATE
+   ============================================================ */
+
+.agent-sidebar-footer-btn.active {
+  color: var(--agent-accent);
+  background: color-mix(in srgb, var(--agent-accent) 12%, transparent);
+}
+
+/* ============================================================
+   MIC RECORDING STATE
+   ============================================================ */
+
+.agent-action-btn.recording {
+  color: #ef4444;
+  animation: agent-pulse 1s ease-in-out infinite;
+}
+
+@keyframes agent-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.15); }
+}
+
+/* ============================================================
+   FILE ATTACH BADGE
+   ============================================================ */
+
+.agent-action-btn[data-count]::after {
+  content: attr(data-count);
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: var(--agent-accent);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+.agent-action-btn { position: relative; }

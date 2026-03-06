@@ -4,6 +4,22 @@
  * Full routing · i18n · Modules · Enhanced settings (bg/gradient/language)
  */
 
+// Web Speech API type declarations (not in lib.dom.d.ts for all envs)
+declare class SpeechRecognition extends EventTarget {
+  continuous: boolean;
+  interimResults: boolean;
+  lang: string;
+  onresult: ((e: SpeechRecognitionEvent) => void) | null;
+  onerror: (() => void) | null;
+  onend: (() => void) | null;
+  start(): void;
+  stop(): void;
+}
+declare class SpeechRecognitionEvent extends Event {
+  readonly resultIndex: number;
+  readonly results: SpeechRecognitionResultList;
+}
+
 import {
   type Conversation,
   type ChatMessage,
@@ -137,7 +153,7 @@ const DISCOVER_CATEGORIES = [
 
 // ── Main App Class ──
 
-type PageRoute = 'welcome' | 'chat' | 'discover' | 'module';
+type PageRoute = 'welcome' | 'chat' | 'discover' | 'module' | 'space';
 
 export class AgentApp {
   private root: HTMLElement;
@@ -153,6 +169,9 @@ export class AgentApp {
   private activeModuleId: string | null = null;
   private referencesPanelOpen = false;
   private topbarCollapsed = false;
+  private isRecording = false;
+  private recognition: InstanceType<typeof SpeechRecognition> | null = null;
+  private attachedFiles: Array<{ name: string; content: string }> = [];
 
   // DOM refs
   private convListEl!: HTMLElement;
@@ -171,6 +190,8 @@ export class AgentApp {
   private moreDropdownEl!: HTMLElement;
   private modulePageEl!: HTMLElement;
   private referencesPanelEl!: HTMLElement;
+  private spaceEl!: HTMLElement;
+  private fileInputEl!: HTMLInputElement;
 
   constructor(root: HTMLElement) {
     this.root = root;
@@ -314,6 +335,9 @@ export class AgentApp {
 
         <!-- ═══ Discover page ═══ -->
         <div class="agent-discover agent-hidden" id="discover-screen"></div>
+
+        <!-- ═══ My Space page ═══ -->
+        <div class="agent-space agent-hidden" id="space-screen"></div>
 
         <!-- ═══ Module sub-page ═══ -->
         <div class="agent-module-page agent-hidden" id="module-page"></div>
@@ -466,6 +490,15 @@ export class AgentApp {
     this.moreDropdownEl = document.getElementById('more-dropdown')!;
     this.modulePageEl = document.getElementById('module-page')!;
     this.referencesPanelEl = document.getElementById('references-panel')!;
+    this.spaceEl = document.getElementById('space-screen')!;
+
+    // Hidden file input for document attach
+    this.fileInputEl = document.createElement('input');
+    this.fileInputEl.type = 'file';
+    this.fileInputEl.accept = '.txt,.md,.json,.csv,.ts,.js,.py,.html,.css,.xml,.log,.pdf';
+    this.fileInputEl.style.display = 'none';
+    this.fileInputEl.multiple = true;
+    document.body.appendChild(this.fileInputEl);
 
     this.renderConversationList();
     this.toggleSettingsFields();
@@ -595,10 +628,33 @@ export class AgentApp {
     };
     syncColor('set-bg-color', 'set-bg-color-text');
 
-    // Dashboard / Discover links
+    // Dashboard / Discover / My Space links
     document.getElementById('dashboard-link')!.addEventListener('click', () => { window.location.href = '/'; });
     document.getElementById('topbar-dashboard')!.addEventListener('click', () => { window.location.href = '/'; });
     document.getElementById('discover-link')!.addEventListener('click', () => this.navigateTo('discover'));
+    document.getElementById('my-space-btn')!.addEventListener('click', () => this.navigateTo('space'));
+
+    // Voice input (Web Speech API)
+    const bindMic = (micId: string, textareaEl: HTMLTextAreaElement, sendBtn: HTMLButtonElement) => {
+      const micBtn = document.getElementById(micId)!;
+      micBtn.addEventListener('click', () => this.toggleVoiceInput(micBtn, textareaEl, sendBtn));
+    };
+    bindMic('welcome-mic', this.welcomeTextareaEl, this.welcomeSendBtnEl);
+    bindMic('chat-mic', this.textareaEl, this.sendBtnEl);
+
+    // File/document attach
+    const bindAttach = (attachId: string, textareaEl: HTMLTextAreaElement, sendBtn: HTMLButtonElement) => {
+      document.getElementById(attachId)!.addEventListener('click', () => {
+        this.fileInputEl.value = '';
+        this.fileInputEl.onchange = () => this.handleFileAttach(textareaEl, sendBtn);
+        this.fileInputEl.click();
+      });
+    };
+    bindAttach('welcome-attach', this.welcomeTextareaEl, this.welcomeSendBtnEl);
+    bindAttach('chat-attach', this.textareaEl, this.sendBtnEl);
+
+    // Sidebar conversation search
+    document.getElementById('sidebar-search-btn')!.addEventListener('click', () => this.toggleSidebarSearch());
 
     // Temperature label update
     document.getElementById('set-temperature')!.addEventListener('input', (e) => {
@@ -641,14 +697,20 @@ export class AgentApp {
     this.inputAreaEl.classList.toggle('agent-hidden', page !== 'chat');
     this.discoverEl.classList.toggle('agent-hidden', page !== 'discover');
     this.modulePageEl.classList.toggle('agent-hidden', page !== 'module');
+    this.spaceEl.classList.toggle('agent-hidden', page !== 'space');
     // Show back button on module page, hide otherwise
     const backBtn = document.getElementById('topbar-back-btn');
     if (backBtn) backBtn.classList.toggle('agent-hidden', page !== 'module');
     if (page === 'discover') this.renderDiscoverPage();
     if (page === 'module') this.renderModulePage();
+    if (page === 'space') this.renderMySpace();
     if (page === 'welcome') { this.messagesEl.innerHTML = ''; }
     // Close references panel when leaving chat
     if (page !== 'chat') this.toggleReferencesPanel(false);
+    // Highlight active nav button
+    this.root.querySelectorAll('.agent-sidebar-footer-btn').forEach(b => b.classList.remove('active'));
+    if (page === 'discover') document.getElementById('discover-link')?.classList.add('active');
+    if (page === 'space') document.getElementById('my-space-btn')?.classList.add('active');
   }
 
   // ── Discover Page ──
@@ -870,14 +932,18 @@ export class AgentApp {
     return this.conversations.find(c => c.id === this.activeConvId);
   }
 
-  private renderConversationList(): void {
+  private renderConversationList(filter?: string): void {
     const s = t();
-    if (this.conversations.length === 0) {
-      this.convListEl.innerHTML = `<div class="agent-conv-empty">${s.noChats}</div>`;
+    const convs = filter
+      ? this.conversations.filter(c => c.title.toLowerCase().includes(filter) ||
+          c.messages.some(m => m.content.toLowerCase().includes(filter)))
+      : this.conversations;
+    if (convs.length === 0) {
+      this.convListEl.innerHTML = `<div class="agent-conv-empty">${filter ? (s.noResults || 'No results') : s.noChats}</div>`;
       return;
     }
 
-    this.convListEl.innerHTML = this.conversations.map(conv => `
+    this.convListEl.innerHTML = convs.map(conv => `
       <div class="agent-conv-item ${conv.id === this.activeConvId ? 'active' : ''}" data-id="${conv.id}">
         <span class="conv-icon">${ICON.chat}</span>
         <span class="conv-title">${this.escapeHtml(conv.title)}</span>
@@ -1203,6 +1269,220 @@ export class AgentApp {
   private scrollToBottom(): void {
     const main = this.chatAreaEl.querySelector('.agent-chat-main') || this.chatAreaEl;
     main.scrollTop = main.scrollHeight;
+  }
+
+  // ── Voice Input ──
+
+  private toggleVoiceInput(micBtn: HTMLElement, textarea: HTMLTextAreaElement, sendBtn: HTMLButtonElement): void {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const w = window as any;
+    const SR: (new () => SpeechRecognition) | undefined = w.SpeechRecognition || w.webkitSpeechRecognition;
+    if (!SR) {
+      alert('Voice input is not supported in this browser. Please use Chrome or Edge.');
+      return;
+    }
+    if (this.isRecording) {
+      this.recognition?.stop();
+      return;
+    }
+    this.isRecording = true;
+    micBtn.classList.add('recording');
+    micBtn.title = 'Stop recording';
+
+    const rec = new SR();
+    this.recognition = rec;
+    rec.continuous = false;
+    rec.interimResults = true;
+    rec.lang = this.settings.language === 'zh' || this.settings.language === 'zh-CN' ? 'zh-CN' : 'en-US';
+
+    const base = textarea.value;
+    rec.onresult = (e: InstanceType<typeof SpeechRecognitionEvent>) => {
+      let interim = '';
+      let final = '';
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const t = e.results[i]![0]!.transcript;
+        if (e.results[i]!.isFinal) final += t;
+        else interim += t;
+      }
+      textarea.value = base + (final || interim);
+      textarea.dispatchEvent(new Event('input'));
+      sendBtn.disabled = !textarea.value.trim();
+    };
+    rec.onerror = () => { this.stopRecording(micBtn); };
+    rec.onend = () => { this.stopRecording(micBtn); };
+    rec.start();
+  }
+
+  private stopRecording(micBtn: HTMLElement): void {
+    this.isRecording = false;
+    this.recognition = null;
+    micBtn.classList.remove('recording');
+    micBtn.title = t().recording;
+  }
+
+  // ── File Attach ──
+
+  private handleFileAttach(textarea: HTMLTextAreaElement, sendBtn: HTMLButtonElement): void {
+    const files = Array.from(this.fileInputEl.files || []);
+    if (!files.length) return;
+
+    let pendingCount = files.length;
+    files.forEach(file => {
+      if (file.type === 'application/pdf') {
+        // PDF: just reference by name (full parsing needs external lib)
+        const ref = `\n\n[Attached: ${file.name}]\n(PDF preview not supported — paste text content manually)\n`;
+        textarea.value += ref;
+        textarea.dispatchEvent(new Event('input'));
+        sendBtn.disabled = !textarea.value.trim();
+        this.attachedFiles.push({ name: file.name, content: ref });
+        pendingCount--;
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const content = (ev.target?.result as string) || '';
+        const maxLen = 8000;
+        const truncated = content.length > maxLen ? content.slice(0, maxLen) + '\n...(truncated)' : content;
+        const block = `\n\n--- ${file.name} ---\n${truncated}\n---\n`;
+        textarea.value += block;
+        textarea.dispatchEvent(new Event('input'));
+        sendBtn.disabled = !textarea.value.trim();
+        this.attachedFiles.push({ name: file.name, content: truncated });
+        pendingCount--;
+        // Show badge on attach button
+        const attachBtn = document.getElementById('welcome-attach') || document.getElementById('chat-attach');
+        if (attachBtn && pendingCount === 0) {
+          attachBtn.setAttribute('data-count', String(files.length));
+        }
+      };
+      reader.readAsText(file, 'utf-8');
+    });
+    textarea.focus();
+  }
+
+  // ── Sidebar Search ──
+
+  private toggleSidebarSearch(): void {
+    const existing = document.getElementById('sidebar-search-input');
+    if (existing) {
+      existing.remove();
+      this.renderConversationList(); // restore full list
+      return;
+    }
+    const convSection = this.root.querySelector('.agent-conv-list')!.previousElementSibling as HTMLElement;
+    const input = document.createElement('input');
+    input.id = 'sidebar-search-input';
+    input.className = 'agent-sidebar-search-input';
+    input.placeholder = t().search + ' conversations...';
+    convSection.insertAdjacentElement('afterend', input);
+    input.focus();
+    input.addEventListener('input', () => {
+      const q = input.value.toLowerCase().trim();
+      this.renderConversationList(q);
+    });
+  }
+
+  // ── My Space Page ──
+
+  private renderMySpace(): void {
+    const s = t();
+    const SPACE_KEY = 'wm-agent-space-notes';
+    const notes: Array<{ id: string; title: string; content: string; ts: number }> =
+      JSON.parse(localStorage.getItem(SPACE_KEY) || '[]');
+
+    const saveNotes = () => localStorage.setItem(SPACE_KEY, JSON.stringify(notes));
+
+    const renderList = () => notes.map(n => `
+      <div class="agent-space-note" data-id="${n.id}">
+        <div class="agent-space-note-header">
+          <span class="agent-space-note-title">${n.title || s.untitled || 'Untitled'}</span>
+          <span class="agent-space-note-ts">${new Date(n.ts).toLocaleDateString()}</span>
+          <button class="agent-space-note-del" data-del="${n.id}" title="${s.delete}">✕</button>
+        </div>
+        <div class="agent-space-note-preview">${n.content.slice(0, 120)}${n.content.length > 120 ? '…' : ''}</div>
+      </div>
+    `).join('') || `<div class="agent-space-empty">${s.spaceEmpty || 'No notes yet. Create your first note!'}</div>`;
+
+    this.spaceEl.innerHTML = `
+      <div class="agent-space-inner">
+        <div class="agent-space-header">
+          <h2>${ICON.user} ${s.mySpace}</h2>
+          <button class="agent-btn-primary agent-space-add-btn" id="space-add-btn">${ICON.plus} ${s.newNote || 'New Note'}</button>
+        </div>
+
+        <div class="agent-space-editor agent-hidden" id="space-editor">
+          <input class="agent-space-title-input" id="space-note-title" placeholder="${s.noteTitle || 'Note title...'}" />
+          <textarea class="agent-space-textarea" id="space-note-content" rows="8" placeholder="${s.noteContent || 'Write your note here...\n\nTip: Paste important context, URLs, summaries or prompts to use in chats.'}"></textarea>
+          <div class="agent-space-editor-actions">
+            <button class="agent-btn-secondary" id="space-editor-cancel">${s.cancel}</button>
+            <button class="agent-btn-primary" id="space-editor-save">${s.save}</button>
+          </div>
+        </div>
+
+        <div class="agent-space-list" id="space-note-list">${renderList()}</div>
+      </div>
+    `;
+
+    // New note button
+    const editor = document.getElementById('space-editor')!;
+    document.getElementById('space-add-btn')!.addEventListener('click', () => {
+      (document.getElementById('space-note-title') as HTMLInputElement).value = '';
+      (document.getElementById('space-note-content') as HTMLTextAreaElement).value = '';
+      editor.classList.remove('agent-hidden');
+      (document.getElementById('space-note-title') as HTMLInputElement).focus();
+    });
+
+    // Cancel editor
+    document.getElementById('space-editor-cancel')!.addEventListener('click', () => {
+      editor.classList.add('agent-hidden');
+    });
+
+    // Save note
+    document.getElementById('space-editor-save')!.addEventListener('click', () => {
+      const title = (document.getElementById('space-note-title') as HTMLInputElement).value.trim();
+      const content = (document.getElementById('space-note-content') as HTMLTextAreaElement).value.trim();
+      if (!content) return;
+      notes.unshift({ id: Date.now().toString(), title: title || (content.slice(0, 40)), content, ts: Date.now() });
+      saveNotes();
+      editor.classList.add('agent-hidden');
+      document.getElementById('space-note-list')!.innerHTML = renderList();
+      this.bindSpaceNoteEvents(notes, saveNotes, renderList);
+    });
+
+    this.bindSpaceNoteEvents(notes, saveNotes, renderList);
+  }
+
+  private bindSpaceNoteEvents(
+    notes: Array<{ id: string; title: string; content: string; ts: number }>,
+    saveNotes: () => void,
+    renderList: () => string
+  ): void {
+    // Delete buttons
+    document.querySelectorAll('[data-del]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = (btn as HTMLElement).dataset.del!;
+        const idx = notes.findIndex(n => n.id === id);
+        if (idx >= 0) { notes.splice(idx, 1); saveNotes(); }
+        document.getElementById('space-note-list')!.innerHTML = renderList();
+        this.bindSpaceNoteEvents(notes, saveNotes, renderList);
+      });
+    });
+
+    // Click note to use in chat
+    document.querySelectorAll('.agent-space-note').forEach(card => {
+      card.addEventListener('click', (e) => {
+        if ((e.target as HTMLElement).dataset.del) return;
+        const id = (card as HTMLElement).dataset.id!;
+        const note = notes.find(n => n.id === id);
+        if (!note) return;
+        this.welcomeTextareaEl.value = note.content;
+        this.welcomeTextareaEl.dispatchEvent(new Event('input'));
+        this.welcomeSendBtnEl.disabled = !note.content.trim();
+        this.navigateTo('welcome');
+        this.welcomeTextareaEl.focus();
+      });
+    });
   }
 
   // ── More Dropdown ──
