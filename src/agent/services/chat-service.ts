@@ -1,68 +1,23 @@
 /**
  * Chat Service — Streaming LLM client for Agent UI.
- * Supports Ollama (local), Groq (cloud), OpenRouter (cloud).
- * All providers use OpenAI-compatible /v1/chat/completions with streaming.
+ * Supports: Ollama (local), Groq (cloud), OpenRouter (cloud), Custom API.
+ * Custom API: Anthropic /v1/messages + x-api-key (confirmed working on duojie.games).
+ * Other providers: OpenAI-compatible /v1/chat/completions + Authorization: Bearer.
  */
 
 import type { ChatMessage, AgentSettings } from './conversation-store';
+import { fetchNewsContext } from './news-context';
 
 export interface StreamCallbacks {
   onToken: (token: string) => void;
   onDone: (fullText: string) => void;
   onError: (error: string) => void;
+  onSearch?: (status: 'searching' | 'done', resultCount?: number) => void;
 }
 
-interface ProviderConfig {
-  url: string;
-  model: string;
-  headers: Record<string, string>;
-  extraBody?: Record<string, unknown>;
-}
+// ── Helpers ──
 
-function getProviderConfig(settings: AgentSettings): ProviderConfig {
-  if (settings.provider === 'ollama') {
-    const baseUrl = settings.ollamaUrl || 'http://localhost:11434';
-    return {
-      url: `${baseUrl}/v1/chat/completions`,
-      model: settings.ollamaModel || 'llama3.1:8b',
-      headers: { 'Content-Type': 'application/json' },
-    };
-  }
-
-  if (settings.provider === 'groq') {
-    return {
-      url: 'https://api.groq.com/openai/v1/chat/completions',
-      model: 'llama-3.1-8b-instant',
-      headers: {
-        'Authorization': `Bearer ${settings.groqKey}`,
-        'Content-Type': 'application/json',
-      },
-    };
-  }
-
-  if (settings.provider === 'openrouter') {
-    return {
-      url: 'https://openrouter.ai/api/v1/chat/completions',
-      model: 'openrouter/auto',
-      headers: {
-        'Authorization': `Bearer ${settings.openrouterKey}`,
-        'Content-Type': 'application/json',
-        'HTTP-Referer': 'https://worldmonitor.app',
-        'X-Title': 'WorldMonitor Agent',
-      },
-    };
-  }
-
-  throw new Error(`Unknown provider: ${settings.provider}`);
-}
-
-function buildMessages(
-  conversation: ChatMessage[],
-  systemPrompt: string,
-  toolMode?: string,
-): Array<{ role: string; content: string }> {
-  const msgs: Array<{ role: string; content: string }> = [];
-
+function getSystemPrompt(systemPrompt: string, toolMode?: string): string {
   let system = systemPrompt;
   if (toolMode === 'deep-think') {
     system += '\n\nIMPORTANT: Think step by step. Show your reasoning process clearly. Break down complex problems into smaller parts.';
@@ -75,17 +30,10 @@ function buildMessages(
   } else if (toolMode === 'market') {
     system += '\n\nIMPORTANT: Focus on market analysis, financial implications, and economic indicators. Provide data-driven insights.';
   }
-
-  msgs.push({ role: 'system', content: system });
-
-  for (const msg of conversation) {
-    if (msg.role === 'user' || msg.role === 'assistant') {
-      msgs.push({ role: msg.role, content: msg.content });
-    }
-  }
-
-  return msgs;
+  return system;
 }
+
+// ── Abort ──
 
 let activeController: AbortController | null = null;
 
@@ -95,6 +43,8 @@ export function abortChat(): void {
     activeController = null;
   }
 }
+
+// ── Main entry ──
 
 export async function streamChat(
   messages: ChatMessage[],
@@ -106,31 +56,180 @@ export async function streamChat(
   activeController = new AbortController();
   const { signal } = activeController;
 
-  const config = getProviderConfig(settings);
-  const chatMessages = buildMessages(messages, settings.systemPrompt, toolMode);
+  try {
+    if (settings.provider === 'custom') {
+      // All custom models use /v1/chat/completions + Authorization: Bearer
+      // (claude-opus-4-6-max /v1/messages streaming returns 503 upstream failures)
+      await streamCustomOpenAI(messages, settings, toolMode, callbacks, signal);
+    } else {
+      await streamOpenAI(messages, settings, toolMode, callbacks, signal);
+    }
+  } finally {
+    activeController = null;
+  }
+}
 
-  const body: Record<string, unknown> = {
-    model: config.model,
+// ── Custom provider OpenAI-compatible (/v1/chat/completions + Bearer) ──
+
+async function streamCustomOpenAI(
+  messages: ChatMessage[],
+  settings: AgentSettings,
+  toolMode: string | undefined,
+  callbacks: StreamCallbacks,
+  signal: AbortSignal,
+): Promise<void> {
+  const baseUrl = (settings.customBaseUrl || 'https://api.duojie.games').replace(/\/+$/, '');
+  const model = (settings.customModel || 'claude-sonnet-4-6').trim();
+  const apiKey = (settings.customApiKey || '').trim();
+  let system = getSystemPrompt(settings.systemPrompt, toolMode);
+
+  // Fetch real-time web search context
+  const lastUserMsg = [...messages].reverse().find(m => m.role === 'user')?.content || '';
+  callbacks.onSearch?.('searching');
+  const newsCtx = await fetchNewsContext(lastUserMsg).catch(() => null);
+  const resultCount = newsCtx ? (newsCtx.match(/^•/gm) || []).length : 0;
+  callbacks.onSearch?.('done', resultCount);
+  if (newsCtx) system = `${system}\n\n${newsCtx}`;
+
+  const chatMessages: Array<{ role: string; content: string }> = [
+    { role: 'system', content: system },
+    ...messages
+      .filter(m => m.role === 'user' || m.role === 'assistant')
+      .map(m => ({ role: m.role, content: m.content })),
+  ];
+
+  const body = { model, messages: chatMessages, stream: true, temperature: settings.temperature, max_tokens: 4096 };
+
+  const targetUrl = `${baseUrl}/v1/chat/completions`;
+  const isDevMode = typeof window !== 'undefined' &&
+    (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+
+  let fetchUrl = targetUrl;
+  const fetchHeaders: Record<string, string> = {
+    'Authorization': `Bearer ${apiKey}`,
+    'Content-Type': 'application/json',
+  };
+  if (isDevMode) {
+    fetchUrl = '/api/llm-proxy';
+    fetchHeaders['X-Target-URL'] = targetUrl;
+  }
+
+  let fullText = '';
+  try {
+    const response = await fetch(fetchUrl, { method: 'POST', headers: fetchHeaders, body: JSON.stringify(body), signal });
+    if (!response.ok) {
+      const errorText = await response.text().catch(() => '');
+      throw new Error(`HTTP ${response.status}: ${errorText.slice(0, 300)}`);
+    }
+    const reader = response.body?.getReader();
+    if (!reader) throw new Error('No response body');
+    const decoder = new TextDecoder();
+    let buffer = '';
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split('\n');
+      buffer = lines.pop() || '';
+      for (const line of lines) {
+        const trimmed = line.trim();
+        if (!trimmed.startsWith('data: ')) continue;
+        const data = trimmed.slice(6);
+        if (data === '[DONE]') { callbacks.onDone(fullText); return; }
+        try {
+          const parsed = JSON.parse(data);
+          const delta = parsed.choices?.[0]?.delta?.content;
+          if (delta) { fullText += delta; callbacks.onToken(delta); }
+        } catch { /* skip */ }
+      }
+    }
+    callbacks.onDone(fullText);
+  } catch (err: unknown) {
+    if (err instanceof Error && err.name === 'AbortError') {
+      callbacks.onDone(fullText);
+    } else {
+      callbacks.onError(err instanceof Error ? err.message : String(err));
+    }
+  }
+}
+
+// ── OpenAI-compatible (/v1/chat/completions) ──
+
+async function streamOpenAI(
+  messages: ChatMessage[],
+  settings: AgentSettings,
+  toolMode: string | undefined,
+  callbacks: StreamCallbacks,
+  signal: AbortSignal,
+): Promise<void> {
+  let system = getSystemPrompt(settings.systemPrompt, toolMode);
+
+  const lastUserMsg = [...messages].reverse().find(m => m.role === 'user')?.content || '';
+  callbacks.onSearch?.('searching');
+  const newsCtx = await fetchNewsContext(lastUserMsg).catch(() => null);
+  const resultCount = newsCtx ? (newsCtx.match(/^•/gm) || []).length : 0;
+  callbacks.onSearch?.('done', resultCount);
+  if (newsCtx) system = `${system}\n\n${newsCtx}`;
+
+  // Build messages array with system role
+  const chatMessages: Array<{ role: string; content: string }> = [
+    { role: 'system', content: system },
+  ];
+  for (const msg of messages) {
+    if (msg.role === 'user' || msg.role === 'assistant') {
+      chatMessages.push({ role: msg.role, content: msg.content });
+    }
+  }
+
+  // Provider-specific config
+  let url: string;
+  let model: string;
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+
+  if (settings.provider === 'ollama') {
+    const baseUrl = settings.ollamaUrl || 'http://localhost:11434';
+    url = `${baseUrl}/v1/chat/completions`;
+    model = settings.ollamaModel || 'llama3.1:8b';
+  } else if (settings.provider === 'groq') {
+    url = 'https://api.groq.com/openai/v1/chat/completions';
+    model = 'llama-3.1-8b-instant';
+    headers['Authorization'] = `Bearer ${settings.groqKey}`;
+  } else if (settings.provider === 'openrouter') {
+    url = 'https://openrouter.ai/api/v1/chat/completions';
+    model = 'openrouter/auto';
+    headers['Authorization'] = `Bearer ${settings.openrouterKey}`;
+    headers['HTTP-Referer'] = 'https://worldmonitor.app';
+    headers['X-Title'] = 'WorldMonitor Agent';
+  } else {
+    // Fallback — should not reach here for 'custom' provider
+    url = 'https://api.groq.com/openai/v1/chat/completions';
+    model = 'llama-3.1-8b-instant';
+  }
+
+  const body = {
+    model,
     messages: chatMessages,
     stream: true,
     temperature: settings.temperature,
     max_tokens: 4096,
-    ...config.extraBody,
   };
+
+  let fetchUrl = url;
+  const fetchHeaders = { ...headers };
 
   let fullText = '';
 
   try {
-    const response = await fetch(config.url, {
+    const response = await fetch(fetchUrl, {
       method: 'POST',
-      headers: config.headers,
+      headers: fetchHeaders,
       body: JSON.stringify(body),
       signal,
     });
 
     if (!response.ok) {
       const errorText = await response.text().catch(() => '');
-      throw new Error(`HTTP ${response.status}: ${errorText.slice(0, 200)}`);
+      throw new Error(`HTTP ${response.status}: ${errorText.slice(0, 300)}`);
     }
 
     const reader = response.body?.getReader();
@@ -154,7 +253,6 @@ export async function streamChat(
         const data = trimmed.slice(6);
         if (data === '[DONE]') {
           callbacks.onDone(fullText);
-          activeController = null;
           return;
         }
 
@@ -179,8 +277,6 @@ export async function streamChat(
       const message = err instanceof Error ? err.message : String(err);
       callbacks.onError(message);
     }
-  } finally {
-    activeController = null;
   }
 }
 

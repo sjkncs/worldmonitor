@@ -4,7 +4,32 @@ import { resolve, dirname, extname } from 'path';
 import { mkdir, readFile, writeFile } from 'fs/promises';
 import { brotliCompress } from 'zlib';
 import { promisify } from 'util';
+import { execSync } from 'child_process';
 import pkg from './package.json';
+
+// Auto-detect Windows system proxy (e.g. VPN browser extension sets it in registry)
+// and enable NODE_USE_ENV_PROXY so built-in fetch routes through it.
+if (process.platform === 'win32' && !process.env.HTTPS_PROXY) {
+  try {
+    const out = execSync(
+      'reg query "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings" /v ProxyEnable /t REG_DWORD',
+      { encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe'] }
+    );
+    if (out.includes('0x1')) {
+      const out2 = execSync(
+        'reg query "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings" /v ProxyServer /t REG_SZ',
+        { encoding: 'utf8', stdio: ['pipe', 'pipe', 'pipe'] }
+      );
+      const m = out2.match(/ProxyServer\s+REG_SZ\s+(\S+)/);
+      if (m) {
+        process.env.HTTPS_PROXY = `http://${m[1]}`;
+        process.env.HTTP_PROXY = `http://${m[1]}`;
+        process.env.NODE_USE_ENV_PROXY = '1';
+        console.log(`[vite] System proxy detected: ${process.env.HTTPS_PROXY}`);
+      }
+    }
+  } catch { /* no proxy or registry unavailable */ }
+}
 
 const isE2E = process.env.VITE_E2E === '1';
 
@@ -152,6 +177,129 @@ function htmlVariantPlugin(): Plugin {
         .replace(/"url": "https:\/\/worldmonitor\.app\/"/, `"url": "${activeMeta.url}"`)
         .replace(/"description": "Real-time global intelligence dashboard with live news, markets, military tracking, infrastructure monitoring, and geopolitical data."/, `"description": "${activeMeta.description}"`)
         .replace(/"featureList": \[[\s\S]*?\]/, `"featureList": ${JSON.stringify(activeMeta.features, null, 8).replace(/\n/g, '\n      ')}`);
+    },
+  };
+}
+
+/**
+ * LLM Proxy plugin — forwards /api/llm-proxy requests to the target LLM API
+ * server-side, bypassing CORS restrictions. The client sends:
+ *   POST /api/llm-proxy
+ *   X-Target-URL: https://api.duojie.games/v1/chat/completions
+ *   (all other headers forwarded as-is)
+ */
+function llmProxyPlugin(): Plugin {
+  return {
+    name: 'llm-proxy',
+    configureServer(server) {
+      server.middlewares.use(async (req, res, next) => {
+        if (!req.url?.startsWith('/api/llm-proxy')) return next();
+
+        const targetUrl = req.headers['x-target-url'] as string | undefined;
+        if (!targetUrl) {
+          res.statusCode = 400;
+          res.setHeader('Content-Type', 'application/json');
+          res.end(JSON.stringify({ error: 'Missing X-Target-URL header' }));
+          return;
+        }
+
+        // Read request body
+        const chunks: Buffer[] = [];
+        for await (const chunk of req) {
+          chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk);
+        }
+        const body = Buffer.concat(chunks).toString();
+
+        // Only forward essential headers — strip all browser-specific ones
+        const allowHeaders = new Set(['content-type', 'authorization', 'x-api-key', 'anthropic-version', 'api-key']);
+        const forwardHeaders: Record<string, string> = {};
+        for (const [key, value] of Object.entries(req.headers)) {
+          if (!allowHeaders.has(key)) continue;
+          if (typeof value === 'string') forwardHeaders[key] = value;
+        }
+        // Only inject anthropic-version for Anthropic /v1/messages endpoint
+        if (targetUrl.includes('/v1/messages') && !forwardHeaders['anthropic-version']) {
+          forwardHeaders['anthropic-version'] = '2023-06-01';
+        }
+
+        try {
+          // Retry up to 3 times for 5xx upstream errors (503/504 transient failures)
+          let upstream!: Response;
+          for (let attempt = 0; attempt < 3; attempt++) {
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), 120000);
+            try {
+              upstream = await fetch(targetUrl, {
+                method: 'POST',
+                headers: forwardHeaders,
+                body,
+                signal: controller.signal,
+              });
+              clearTimeout(timer);
+            } catch (fetchErr) {
+              clearTimeout(timer);
+              if (attempt < 2) {
+                await new Promise(r => setTimeout(r, 2000 * (attempt + 1)));
+                continue;
+              }
+              throw fetchErr;
+            }
+            if (upstream.status < 500 || attempt === 2) break;
+            // 5xx: wait and retry
+            await upstream.text(); // drain
+            await new Promise(r => setTimeout(r, 2000 * (attempt + 1)));
+          }
+
+          if (upstream.status >= 400) {
+            const errBody = await upstream.text();
+            res.statusCode = upstream.status;
+            res.setHeader('Content-Type', 'application/json');
+            res.setHeader('Access-Control-Allow-Origin', '*');
+            res.end(errBody);
+            return;
+          }
+
+          // Set response status and headers
+          res.statusCode = upstream.status;
+          res.setHeader('Content-Type', upstream.headers.get('content-type') || 'application/json');
+          res.setHeader('Access-Control-Allow-Origin', '*');
+
+          // Stream the response back
+          if (upstream.body) {
+            const reader = (upstream.body as any).getReader();
+            const pump = async () => {
+              while (true) {
+                const { done, value } = await reader.read();
+                if (done) { res.end(); return; }
+                res.write(value);
+              }
+            };
+            await pump();
+          } else {
+            res.end(await upstream.text());
+          }
+        } catch (err: any) {
+          console.error('[llm-proxy] Error:', err.message, '|', err.cause?.message || err.code || '');
+          if (!res.headersSent) {
+            res.statusCode = 502;
+            res.setHeader('Content-Type', 'application/json');
+          }
+          res.end(JSON.stringify({ error: `Proxy error: ${err.message}` }));
+        }
+      });
+
+      // Handle CORS preflight for the proxy endpoint
+      server.middlewares.use((req, res, next) => {
+        if (req.method === 'OPTIONS' && req.url?.startsWith('/api/llm-proxy')) {
+          res.setHeader('Access-Control-Allow-Origin', '*');
+          res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+          res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-api-key, x-target-url, anthropic-version');
+          res.statusCode = 204;
+          res.end();
+          return;
+        }
+        next();
+      });
     },
   };
 }
@@ -483,6 +631,7 @@ export default defineConfig({
   },
   plugins: [
     htmlVariantPlugin(),
+    llmProxyPlugin(),
     polymarketPlugin(),
     youtubeLivePlugin(),
     sebufApiPlugin(),
@@ -674,6 +823,7 @@ export default defineConfig({
   },
   server: {
     port: 3000,
+    host: '0.0.0.0',
     open: !isE2E,
     hmr: isE2E ? false : undefined,
     watch: {

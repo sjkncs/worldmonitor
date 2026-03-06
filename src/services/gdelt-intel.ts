@@ -91,7 +91,7 @@ const gdeltBreaker = createCircuitBreaker<SearchGdeltDocumentsResponse>({ name: 
 
 const emptyGdeltFallback: SearchGdeltDocumentsResponse = { articles: [], query: '', error: '' };
 
-const CACHE_TTL = 5 * 60 * 1000;
+const CACHE_TTL = 15 * 60 * 1000;
 const articleCache = new Map<string, { articles: GdeltArticle[]; timestamp: number }>();
 
 /** Map proto GdeltArticle (all required strings) to service GdeltArticle (optional fields) */
@@ -153,10 +153,13 @@ export async function fetchTopicIntelligence(topic: IntelTopic): Promise<TopicIn
 }
 
 export async function fetchAllTopicIntelligence(): Promise<TopicIntelligence[]> {
-  const results = await Promise.allSettled(
-    INTEL_TOPICS.map(topic => fetchTopicIntelligence(topic))
-  );
-
+  const results: PromiseSettledResult<TopicIntelligence>[] = [];
+  for (const topic of INTEL_TOPICS) {
+    results.push(await Promise.allSettled([fetchTopicIntelligence(topic)]).then(r => r[0]));
+    if (results.length < INTEL_TOPICS.length) {
+      await new Promise(resolve => setTimeout(resolve, 500));
+    }
+  }
   return results
     .filter((r): r is PromiseFulfilledResult<TopicIntelligence> => r.status === 'fulfilled')
     .map(r => r.value);

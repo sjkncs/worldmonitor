@@ -25,25 +25,37 @@ const STORAGE_KEY = 'wm-agent-conversations';
 const SETTINGS_KEY = 'wm-agent-settings';
 
 export interface AgentSettings {
-  provider: 'ollama' | 'groq' | 'openrouter';
+  provider: 'ollama' | 'groq' | 'openrouter' | 'custom';
   ollamaUrl: string;
   ollamaModel: string;
   groqKey: string;
   openrouterKey: string;
+  customBaseUrl: string;
+  customApiKey: string;
+  customModel: string;
   systemPrompt: string;
   temperature: number;
   language: string;
+  bgColor: string;
+  gradientStart: string;
+  gradientEnd: string;
 }
 
 const DEFAULT_SETTINGS: AgentSettings = {
-  provider: 'ollama',
+  provider: 'custom',
   ollamaUrl: 'http://localhost:11434',
   ollamaModel: 'llama3.1:8b',
   groqKey: '',
   openrouterKey: '',
+  customBaseUrl: 'https://api.duojie.games',
+  customApiKey: '',
+  customModel: 'claude-sonnet-4-6',
   systemPrompt: 'You are World Monitor Agent, an AI assistant specialized in global intelligence, geopolitical analysis, market insights, and OSINT. You have access to real-time data about conflicts, military activity, infrastructure, markets, and news worldwide. Respond in the user\'s language. Be concise, factual, and analytical.',
   temperature: 0.7,
   language: 'auto',
+  bgColor: '#0f0f10',
+  gradientStart: '',
+  gradientEnd: '',
 };
 
 export function generateId(): string {
@@ -92,7 +104,12 @@ export function loadSettings(): AgentSettings {
   try {
     const raw = localStorage.getItem(SETTINGS_KEY);
     if (!raw) return { ...DEFAULT_SETTINGS };
-    return { ...DEFAULT_SETTINGS, ...JSON.parse(raw) };
+    const settings = { ...DEFAULT_SETTINGS, ...JSON.parse(raw) };
+    // Migrate removed model names to valid ones
+    if (settings.customModel === 'claude-opus-4-6') {
+      settings.customModel = 'claude-sonnet-4-6';
+    }
+    return settings;
   } catch {
     return { ...DEFAULT_SETTINGS };
   }

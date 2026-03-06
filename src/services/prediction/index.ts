@@ -164,8 +164,8 @@ async function polyFetch(endpoint: 'events' | 'markets', params: Record<string, 
     }
   } catch { /* sebuf handler failed (Cloudflare expected) */ }
 
-  // Final fallback: hit production endpoint directly
-  return fetch(`https://worldmonitor.app/api/polymarket?${proxyQs}`);
+  // Final fallback: relative URL works in both dev (polymarketPlugin) and prod (same-origin Vercel fn)
+  return fetch(`/api/polymarket?${proxyQs}`);
 }
 
 const GEOPOLITICAL_TAGS = [
